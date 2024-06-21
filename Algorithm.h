@@ -1,3 +1,4 @@
+
 #ifndef HEADER_FILE
 #define HEADER_FILE
 
@@ -24,15 +25,18 @@ void recursiveCocktailSort(int *arr, int n, long long &comparisonCount);
 void recursiveCocktailSort(int *arr, int n);
 
 // Heap Sort Variations
-void basicHeapify(int *arr, int n, int i, long long *comparisonCount = nullptr);
+void basicHeapify(int *arr, int n, int i, long long &comparisonCount);
+void basicHeapifyNoComp(int *arr, int n, int i);
 void basicHeapSort(int *arr, int n, long long &comparisonCount);
 void basicHeapSort(int *arr, int n);
-void floydHeapify(int *arr, int n, int i, long long *comparisonCount = nullptr);
+void floydHeapify(int *arr, int n, int i, long long &comparisonCount);
+void floydHeapifyNoComp(int *arr, int n, int i);
 void floydHeapSort(int *arr, int n, long long &comparisonCount);
 void floydHeapSort(int *arr, int n);
 
 // Shaker Sort
-void shakerSort(int *arr, int n, long long &comparisonCount);
-void shakerSort(int *arr, int n);
+void basicShakerSort(int *arr, int n, long long &comparisonCount);
+void basicShakerSort(int *arr, int n);
 
 #endif
+

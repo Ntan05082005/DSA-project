@@ -1,3 +1,4 @@
+
 #include "Algorithm.h"
 
 using namespace std;
@@ -12,29 +13,6 @@ double stopTimer(clock_t start) {
 }
 
 // Bubble Sort Variations
-// Basic Bubble Sort with comparison counter
-void basicBubbleSort(int arr[], int n, long long &comparisonCount) {
-    for (int i = 0; i < n-1; i++) {
-        for (int j = 0; j < n-i-1; j++) {
-            comparisonCount++;
-            if (arr[j] > arr[j+1]) {
-                swap(arr[j], arr[j+1]);
-            }
-        }
-    }
-}
-
-// Basic Bubble Sort without comparison counter
-void basicBubbleSort(int arr[], int n) {
-    for (int i = 0; i < n-1; i++) {
-        for (int j = 0; j < n-i-1; j++) {
-            if (arr[j] > arr[j+1]) {
-                swap(arr[j], arr[j+1]);
-            }
-        }
-    }
-}
-
 // Optimized Bubble Sort with comparison counter
 void optimizedBubbleSort(int arr[], int n, long long &comparisonCount) {
     bool swapped;
@@ -66,28 +44,30 @@ void optimizedBubbleSort(int arr[], int n) {
     }
 }
 
-// Recursive Bubble Sort with comparison counter
-void recursiveBubbleSort(int arr[], int n, long long &comparisonCount) {
-    if (n == 1) return;
+// Basic Bubble Sort with comparison counter
+void basicBubbleSort(int arr[], int n, long long &comparisonCount) {
     for (int i = 0; i < n-1; i++) {
-        comparisonCount++;
-        if (arr[i] > arr[i+1]) {
-            swap(arr[i], arr[i+1]);
+        for (int j = 0; j < n-i-1; j++) {
+            comparisonCount++;
+            if (arr[j] > arr[j+1]) {
+                swap(arr[j], arr[j+1]);
+            }
         }
     }
-    recursiveBubbleSort(arr, n-1, comparisonCount);
 }
 
-// Recursive Bubble Sort without comparison counter
-void recursiveBubbleSort(int arr[], int n) {
-    if (n == 1) return;
+// Basic Bubble Sort without comparison counter
+void basicBubbleSort(int arr[], int n) {
     for (int i = 0; i < n-1; i++) {
-        if (arr[i] > arr[i+1]) {
-            swap(arr[i], arr[i+1]);
+        for (int j = 0; j < n-i-1; j++) {
+            if (arr[j] > arr[j+1]) {
+                swap(arr[j], arr[j+1]);
+            }
         }
     }
-    recursiveBubbleSort(arr, n-1);
 }
+
+
 
 // Cocktail Sort Variations
 // Cocktail Sort with comparison counter
@@ -262,20 +242,20 @@ void basicHeapSort(int arr[], int n) {
 }
 
 // Floyd's Heap Sort Variations
-// Floyd's Heapify function with comparison counter
-void floydHeapify(int arr[], int n, int i, long long &comparisonCount) {
+// Unified Floyd's Heapify function with comparison counter
+void floydHeapify(int arr[], int n, int i, long long *comparisonCount = nullptr) {
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
 
     if (left < n) {
-        if (comparisonCount) (comparisonCount)++;
+        if (comparisonCount) (*comparisonCount)++;
         if (arr[left] > arr[largest]) {
             largest = left;
         }
     }
     if (right < n) {
-        if (comparisonCount) (comparisonCount)++;
+        if (comparisonCount) (*comparisonCount)++;
         if (arr[right] > arr[largest]) {
             largest = right;
         }
@@ -289,46 +269,24 @@ void floydHeapify(int arr[], int n, int i, long long &comparisonCount) {
 // Floyd's Heap Sort with comparison counter
 void floydHeapSort(int arr[], int n, long long &comparisonCount) {
     for (int i = n / 2 - 1; i >= 0; i--) {
-        floydHeapify(arr, n, i, comparisonCount);
+        floydHeapify(arr, n, i, &comparisonCount);
     }
 
     for (int i = n - 1; i > 0; i--) {
         swap(arr[0], arr[i]);
-        floydHeapify(arr, i, 0, comparisonCount);
-    }
-}
-
-// Floyd's Heapify function without comparison counter
-void floydHeapifyNoComp(int arr[], int n, int i) {
-    int largest = i;
-    int left = 2 * i + 1;
-    int right = 2 * i + 2;
-
-    if (left < n) {
-        if (arr[left] > arr[largest]) {
-            largest = left;
-        }
-    }
-    if (right < n) {
-        if (arr[right] > arr[largest]) {
-            largest = right;
-        }
-    }
-    if (largest != i) {
-        swap(arr[i], arr[largest]);
-        floydHeapifyNoComp(arr, n, largest);
+        floydHeapify(arr, i, 0, &comparisonCount);
     }
 }
 
 // Floyd's Heap Sort without comparison counter
 void floydHeapSort(int arr[], int n) {
     for (int i = n / 2 - 1; i >= 0; i--) {
-        floydHeapifyNoComp(arr, n, i);
+        floydHeapify(arr, n, i);
     }
 
     for (int i = n - 1; i > 0; i--) {
         swap(arr[0], arr[i]);
-        floydHeapifyNoComp(arr, i, 0);
+        floydHeapify(arr, i, 0);
     }
 }
 
