@@ -388,3 +388,132 @@ void basicShakerSort(int arr[], int n) {
         ++start;
     }
 }
+
+//Counting Sort with comparison counter
+void CountingSortCount(int arr[], int n, long long& comparisons) {
+    int* tmp = new int[n];
+
+
+    int max = arr[0];
+    for (int i = 1; ++comparisons && i < n; i++) {
+
+        if (++comparisons && arr[i] > max)
+            max = arr[i];
+    }
+
+    int* cnt = new int[max + 1];
+
+
+    for (int i = 0; ++comparisons && i < max; i++) {
+        cnt[arr[i]]++;
+    }
+
+    for (int i = 1; ++comparisons && i <= max; i++) {
+        cnt[i] += cnt[i - 1];
+    }
+
+    for (int i = n - 1; ++comparisons && i >= 0; i--) {
+        tmp[cnt[arr[i] - 1]] = arr[i];
+        cnt[arr[i]]--;
+    }
+
+    for (int i = 0; ++comparisons && i < n; i++) {
+        arr[i] = tmp[i];
+    }
+    delete[] tmp;
+    delete[] cnt;
+}
+
+//Radix Sort with comparison counter
+void RadixSortCount(int arr[], int n, long long& comparisons) {
+    int* tmp = new int[n];
+    int max = arr[0];
+    int exp = 1;
+    int key;
+    for (int i = 0; ++comparisons && i < n; i++) {
+        if (arr[i] > max && ++comparisons)
+            max = arr[i];
+    }
+    while (++comparisons && exp <= max) {
+        int cnt[10] = { 0 };
+        for (int i = 0; ++comparisons && i < n; i++) {
+            key = (arr[i] / exp) % 10;
+            cnt[key]++;
+        }
+        for (int i = 1; ++comparisons && i < 10; i++) {
+            cnt[i] += cnt[i - 1];
+        }
+        for (int i = n - 1; ++comparisons && i >= 0; i--) {
+            key = (arr[i] / exp) % 10;
+            tmp[--cnt[key]] = arr[i];
+        }
+        for (int i = 0; ++comparisons && i < n; i++) {
+            arr[i] = tmp[i];
+        }
+        delete[] tmp;
+        exp *= 10;
+    }
+}
+//Counting Sort 
+void CountingSort(int arr[], int n) {
+    int* tmp = new int[n];
+    int max = arr[0];
+
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max)
+            max = arr[i];
+    }
+
+    int* cnt = new int[max + 1];
+
+    for (int i = 0; i < max; i++) {
+        cnt[arr[i]]++;
+    }
+
+    for (int i = 1; i <= max; i++) {
+        cnt[i] += cnt[i - 1];
+    }
+
+    for (int i = n - 1; i >= 0; i--) {
+        tmp[cnt[arr[i]] - 1] = arr[i];
+        cnt[arr[i]]--;
+    }
+
+    for (int i = 0; i < n; i++) {
+        arr[i] = tmp[i];
+    }
+
+    delete[] tmp;
+    delete[] cnt;
+}
+
+//Radix Sort
+void RadixSort(int arr[], int n) {
+    int* tmp = new int[n];
+    int max = arr[0];
+    int exp = 1;
+    int key;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] > max)
+            max = arr[i];
+    }
+    while (exp <= max) {
+        int cnt[10] = { 0 };
+        for (int i = 0; i < n; i++) {
+            key = (arr[i] / exp) % 10;
+            cnt[key]++;
+        }
+        for (int i = 1; i < 10; i++) {
+            cnt[i] += cnt[i - 1];
+        }
+        for (int i = n - 1; i >= 0; i--) {
+            key = (arr[i] / exp) % 10;
+            tmp[--cnt[key]] = arr[i];
+        }
+        for (int i = 0; i < n; i++) {
+            arr[i] = tmp[i];
+        }
+        exp *= 10;
+    }
+    delete[] tmp;
+}

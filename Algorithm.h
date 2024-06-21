@@ -38,5 +38,12 @@ void floydHeapSort(int *arr, int n);
 void basicShakerSort(int *arr, int n, long long &comparisonCount);
 void basicShakerSort(int *arr, int n);
 
+//Counting Sort
+void CountingSortCount(int arr[], int n, long long& comparisons);
+void CountingSort(int arr[], int n);
+
+//Radix Sort
+void RadixSort(int arr[], int n);
+void RadixSortCount(int arr[], int n, long long& comparisons);
 #endif
 
