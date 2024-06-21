@@ -14,11 +14,11 @@ double stopTimer(clock_t start) {
 // Bubble Sort Variations
 // Basic Bubble Sort with comparison counter
 void basicBubbleSort(int arr[], int n, long long &comparisonCount) {
-    for (int i = 0; i < n-1; i++) {
-        for (int j = 0; j < n-i-1; j++) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = n - 1; j > i; j--) {
             comparisonCount++;
-            if (arr[j] > arr[j+1]) {
-                swap(arr[j], arr[j+1]);
+            if (arr[j] < arr[j - 1]) {
+                swap(arr[j], arr[j - 1]);
             }
         }
     }
@@ -26,10 +26,10 @@ void basicBubbleSort(int arr[], int n, long long &comparisonCount) {
 
 // Basic Bubble Sort without comparison counter
 void basicBubbleSort(int arr[], int n) {
-    for (int i = 0; i < n-1; i++) {
-        for (int j = 0; j < n-i-1; j++) {
-            if (arr[j] > arr[j+1]) {
-                swap(arr[j], arr[j+1]);
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = n - 1; j > i; j--) {
+            if (arr[j] < arr[j - 1]) {
+                swap(arr[j], arr[j - 1]);
             }
         }
     }
@@ -38,55 +38,59 @@ void basicBubbleSort(int arr[], int n) {
 // Optimized Bubble Sort with comparison counter
 void optimizedBubbleSort(int arr[], int n, long long &comparisonCount) {
     bool swapped;
-    for (int i = 0; i < n-1; i++) {
+    for (int i = 0; i < n - 1; i++) {
         swapped = false;
-        for (int j = 0; j < n-i-1; j++) {
+        for (int j = n - 1; j > i; j--) {
             comparisonCount++;
-            if (arr[j] > arr[j+1]) {
-                swap(arr[j], arr[j+1]);
+            if (arr[j] < arr[j - 1]) {
+                swap(arr[j], arr[j - 1]);
                 swapped = true;
             }
         }
-        if (!swapped) break;
+        if (!swapped) 
+            break;
     }
 }
 
 // Optimized Bubble Sort without comparison counter
 void optimizedBubbleSort(int arr[], int n) {
     bool swapped;
-    for (int i = 0; i < n-1; i++) {
+    for (int i = 0; i < n - 1; i++) {
         swapped = false;
-        for (int j = 0; j < n-i-1; j++) {
-            if (arr[j] > arr[j+1]) {
-                swap(arr[j], arr[j+1]);
+        for (int j = n - 1; j > i; j--) {
+            if (arr[j] < arr[j - 1]) {
+                swap(arr[j], arr[j - 1]);
                 swapped = true;
             }
         }
-        if (!swapped) break;
+        if (!swapped) 
+            break;
     }
 }
 
 // Recursive Bubble Sort with comparison counter
 void recursiveBubbleSort(int arr[], int n, long long &comparisonCount) {
-    if (n == 1) return;
-    for (int i = 0; i < n-1; i++) {
+    if (n == 1) 
+        return; // Base case
+    for (int i = 0; i < n - 1; i++) {
         comparisonCount++;
-        if (arr[i] > arr[i+1]) {
-            swap(arr[i], arr[i+1]);
+        if (arr[i] > arr[i + 1]) {
+            swap(arr[i], arr[i + 1]);
         }
     }
-    recursiveBubbleSort(arr, n-1, comparisonCount);
+    recursiveBubbleSort(arr, n - 1, comparisonCount);
 }
 
 // Recursive Bubble Sort without comparison counter
 void recursiveBubbleSort(int arr[], int n) {
-    if (n == 1) return;
+    if (n == 1) 
+        return;
     for (int i = 0; i < n-1; i++) {
-        if (arr[i] > arr[i+1]) {
-            swap(arr[i], arr[i+1]);
+        if (arr[i] > arr[i + 1]) {
+            swap(arr[i], arr[i + 1]);
         }
     }
-    recursiveBubbleSort(arr, n-1);
+    recursiveBubbleSort(arr, n - 1);
 }
 
 // Cocktail Sort Variations
@@ -105,9 +109,12 @@ void cocktailSort(int arr[], int n, long long &comparisonCount) {
                 swapped = true;
             }
         }
-        if (!swapped) break;
+
+        if (!swapped) 
+            break;
         swapped = false;
         --end;
+
         for (int i = end - 1; i >= start; --i) {
             comparisonCount++;
             if (arr[i] > arr[i + 1]) {
@@ -133,9 +140,12 @@ void cocktailSort(int arr[], int n) {
                 swapped = true;
             }
         }
-        if (!swapped) break;
+
+        if (!swapped)
+            break;
         swapped = false;
         --end;
+
         for (int i = end - 1; i >= start; --i) {
             if (arr[i] > arr[i + 1]) {
                 swap(arr[i], arr[i + 1]);
@@ -148,46 +158,58 @@ void cocktailSort(int arr[], int n) {
 
 // Recursive Cocktail Sort with comparison counter
 void recursiveCocktailSort(int arr[], int n, long long &comparisonCount) {
-    if (n <= 1) return;
+    if (n <= 1) 
+        return; // Base case
     bool swapped = false;
-    for (int i = 0; i < n-1; i++) {
+    for (int i = 0; i < n - 1; i++) {
         comparisonCount++;
-        if (arr[i] > arr[i+1]) {
-            swap(arr[i], arr[i+1]);
+        if (arr[i] > arr[i + 1]) {
+            swap(arr[i], arr[i + 1]);
             swapped = true;
         }
     }
-    if (!swapped) return;
+
+    if (!swapped) 
+        return;
     swapped = false;
+
     for (int i = n-2; i >= 0; i--) {
         comparisonCount++;
-        if (arr[i] > arr[i+1]) {
-            swap(arr[i], arr[i+1]);
+        if (arr[i] > arr[i + 1]) {
+            swap(arr[i], arr[i + 1]);
             swapped = true;
         }
     }
-    if (swapped) recursiveCocktailSort(arr, n-1, comparisonCount);
+
+    if (swapped) 
+        recursiveCocktailSort(arr, n - 1, comparisonCount);
 }
 
 // Recursive Cocktail Sort without comparison counter
 void recursiveCocktailSort(int arr[], int n) {
-    if (n <= 1) return;
+    if (n <= 1) 
+        return;
     bool swapped = false;
-    for (int i = 0; i < n-1; i++) {
-        if (arr[i] > arr[i+1]) {
-            swap(arr[i], arr[i+1]);
+    for (int i = 0; i < n - 1; i++) {
+        if (arr[i] > arr[i + 1]) {
+            swap(arr[i], arr[i + 1]);
             swapped = true;
         }
     }
-    if (!swapped) return;
+
+    if (!swapped) 
+        return;
     swapped = false;
-    for (int i = n-2; i >= 0; i--) {
-        if (arr[i] > arr[i+1]) {
-            swap(arr[i], arr[i+1]);
+
+    for (int i = n - 2; i >= 0; i--) {
+        if (arr[i] > arr[i + 1]) {
+            swap(arr[i], arr[i + 1]);
             swapped = true;
         }
     }
-    if (swapped) recursiveCocktailSort(arr, n-1);
+
+    if (swapped) 
+        recursiveCocktailSort(arr, n - 1);
 }
 
 // Heap Sort Variations
@@ -198,13 +220,15 @@ void basicHeapify(int arr[], int n, int i, long long &comparisonCount) {
     int right = 2 * i + 2;
 
     if (left < n) {
-        if (comparisonCount) (comparisonCount)++;
+        if (comparisonCount) 
+            comparisonCount++;
         if (arr[left] > arr[largest]) {
             largest = left;
         }
     }
     if (right < n) {
-        if (comparisonCount) (comparisonCount)++;
+        if (comparisonCount) 
+            comparisonCount++;
         if (arr[right] > arr[largest]) {
             largest = right;
         }
@@ -269,13 +293,15 @@ void floydHeapify(int arr[], int n, int i, long long &comparisonCount) {
     int right = 2 * i + 2;
 
     if (left < n) {
-        if (comparisonCount) (comparisonCount)++;
+        if (comparisonCount) 
+            comparisonCount++;
         if (arr[left] > arr[largest]) {
             largest = left;
         }
     }
     if (right < n) {
-        if (comparisonCount) (comparisonCount)++;
+        if (comparisonCount) 
+            comparisonCount++;
         if (arr[right] > arr[largest]) {
             largest = right;
         }
@@ -348,9 +374,12 @@ void basicShakerSort(int arr[], int n, long long &comparisonCount) {
                 swapped = true;
             }
         }
-        if (!swapped) break;
+
+        if (!swapped) 
+            break;
         swapped = false;
         --end;
+
         for (int i = end - 1; i >= start; --i) {
             comparisonCount++;
             if (arr[i] > arr[i + 1]) {
@@ -376,9 +405,12 @@ void basicShakerSort(int arr[], int n) {
                 swapped = true;
             }
         }
-        if (!swapped) break;
+
+        if (!swapped) 
+            break;
         swapped = false;
         --end;
+
         for (int i = end - 1; i >= start; --i) {
             if (arr[i] > arr[i + 1]) {
                 swap(arr[i], arr[i + 1]);
