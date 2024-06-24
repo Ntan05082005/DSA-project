@@ -218,6 +218,6 @@ int main() {
     cout << "Quick Sort without comparisons: " << quickTime << " seconds" << endl;
 
     delete[] arr;
-    getch();
+    getch(); // Dung de dung man hinh
     return 0;
 }
