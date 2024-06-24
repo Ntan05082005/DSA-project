@@ -117,15 +117,13 @@ void basicHeapifyCount(int *arr, int n, int i, long long &comparisonCount) {
     int right = 2 * i + 2;
 
     if (left < n) {
-        if (comparisonCount) 
-            comparisonCount++;
+        comparisonCount++;
         if (arr[left] > arr[largest]) {
             largest = left;
         }
     }
     if (right < n) {
-        if (comparisonCount) 
-            comparisonCount++;
+        comparisonCount++;
         if (arr[right] > arr[largest]) {
             largest = right;
         }
