@@ -1,19 +1,12 @@
 #include "Algorithm.h"
+#include "Data.h"
 
-using namespace std;
-
-// Timer functions
-clock_t startTimer() {
-    return clock();
-}
-
-double stopTimer(clock_t start) {
-    return double(clock() - start) / CLOCKS_PER_SEC;
-}
 
 // Bubble Sort 
 // Basic Bubble Sort with comparison counter
-void basicBubbleSortCount(int *arr, int n, long long &comparisonCount) {
+void basicBubbleSortCount(int* arr, int n, long long& comparisonCount, double& time) {
+    auto start = high_resolution_clock::now();
+
     for (int i = 0; i < n - 1; i++) {
         for (int j = n - 1; j > i; j--) {
             comparisonCount++;
@@ -22,10 +15,15 @@ void basicBubbleSortCount(int *arr, int n, long long &comparisonCount) {
             }
         }
     }
+
+    auto end = chrono::high_resolution_clock::now(); // End the timer
+    chrono::duration<double> duration = end - start;
+    time = duration.count(); 
 }
 
 // Basic Bubble Sort without comparison counter
-void basicBubbleSort(int *arr, int n) {
+void basicBubbleSort(int *arr, int n,double& time) {
+    auto start = high_resolution_clock::now();
     for (int i = 0; i < n - 1; i++) {
         for (int j = n - 1; j > i; j--) {
             if (arr[j] < arr[j - 1]) {
@@ -33,15 +31,20 @@ void basicBubbleSort(int *arr, int n) {
             }
         }
     }
+    auto end = chrono::high_resolution_clock::now(); // End the timer
+    chrono::duration<double> duration = end - start;
+    time = duration.count();
 }
 
 // Shaker Sort 
 // Basic Shaker Sort with comparison counter
-void basicShakerSortCount(int *arr, int n, long long &comparisonCount) {
+
+void basicShakerSortCount(int* arr, int n, long long& comparisonCount, double& time) {
+    auto startTime = high_resolution_clock::now();
     bool swapped = true;
     int start = 0;
     int end = n - 1;
-
+    
     while (swapped) {
         swapped = false;
         for (int i = start; i < end; ++i) {
@@ -52,7 +55,7 @@ void basicShakerSortCount(int *arr, int n, long long &comparisonCount) {
             }
         }
 
-        if (!swapped) 
+        if (!swapped)
             break;
         swapped = false;
         --end;
@@ -66,14 +69,18 @@ void basicShakerSortCount(int *arr, int n, long long &comparisonCount) {
         }
         ++start;
     }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 // Basic Shaker Sort without comparison counter
-void basicShakerSort(int *arr, int n) {
+void basicShakerSort(int *arr, int n, double& time) {
+    auto startTime = high_resolution_clock::now();
     bool swapped = true;
     int start = 0;
     int end = n - 1;
-
+    
     while (swapped) {
         swapped = false;
         for (int i = start; i < end; ++i) {
@@ -96,11 +103,15 @@ void basicShakerSort(int *arr, int n) {
         }
         ++start;
     }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 // Heap Sort
 // Heapify function with comparison counter
 void basicHeapifyCount(int *arr, int n, int i, long long &comparisonCount) {
+    
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
@@ -123,10 +134,12 @@ void basicHeapifyCount(int *arr, int n, int i, long long &comparisonCount) {
         swap(arr[i], arr[largest]);
         basicHeapifyCount(arr, n, largest, comparisonCount);
     }
+    
 }
 
 // Basic Heap Sort with comparison counter
-void basicHeapSortCount(int *arr, int n, long long &comparisonCount) {
+void basicHeapSortCount(int *arr, int n, long long &comparisonCount,double& time) {
+    auto startTime = high_resolution_clock::now();
     for (int i = n / 2 - 1; i >= 0; i--) {
         basicHeapifyCount(arr, n, i, comparisonCount);
     }
@@ -135,10 +148,14 @@ void basicHeapSortCount(int *arr, int n, long long &comparisonCount) {
         swap(arr[0], arr[i]);
         basicHeapifyCount(arr, i, 0, comparisonCount);
     }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 // Heapify function without comparison counter
 void basicHeapify(int *arr, int n, int i) {
+    
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
@@ -160,7 +177,8 @@ void basicHeapify(int *arr, int n, int i) {
 }
 
 // Basic Heap Sort without comparison counter
-void basicHeapSort(int *arr, int n) {
+void basicHeapSort(int *arr, int n,double& time) {
+    auto startTime = high_resolution_clock::now();
     for (int i = n / 2 - 1; i >= 0; i--) {
         basicHeapify(arr, n, i);
     }
@@ -169,49 +187,90 @@ void basicHeapSort(int *arr, int n) {
         swap(arr[0], arr[i]);
         basicHeapify(arr, i, 0);
     }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 //Counting Sort with comparison counter
-void CountingSortCount(int arr[], int n, long long& comparisons) {
+void CountingSortCount(int arr[], int n, long long& comparisons, double& time) {
     int* tmp = new int[n];
-
-    // Find the maximum value in the array
+    auto startTime = high_resolution_clock::now();
+   
     int max = arr[0];
     for (int i = 1; ++comparisons && i < n; i++) {
         if (++comparisons && arr[i] > max)
             max = arr[i];
     }
 
-    // Create a count array to store the count of each unique number
     int* cnt = new int[max + 1]();
 
-    // Count each element in the array
     for (int i = 0; ++comparisons && i < n; i++) {
         cnt[arr[i]]++;
     }
 
-    // Update count array to hold the position of elements in the sorted array
     for (int i = 1; ++comparisons && i <= max; i++) {
         cnt[i] += cnt[i - 1];
     }
 
-    // Build the temporary sorted array
     for (int i = n - 1; ++comparisons && i >= 0; i--) {
         tmp[cnt[arr[i]] - 1] = arr[i];
         cnt[arr[i]]--;
     }
 
-    // Copy the sorted elements back into the original array
     for (int i = 0; ++comparisons && i < n; i++) {
         arr[i] = tmp[i];
     }
 
     delete[] tmp;
     delete[] cnt;
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
+
+}
+
+//Counting Sort 
+void CountingSort(int arr[], int n, double& time) {
+    auto startTime = high_resolution_clock::now();
+    int* tmp = new int[n];
+
+
+    int max = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max)
+            max = arr[i];
+    }
+
+    int* cnt = new int[max + 1]();
+
+    for (int i = 0; i < n; i++) {
+        cnt[arr[i]]++;
+    }
+
+    for (int i = 1; i <= max; i++) {
+        cnt[i] += cnt[i - 1];
+    }
+
+    for (int i = n - 1; i >= 0; i--) {
+        tmp[cnt[arr[i]] - 1] = arr[i];
+        cnt[arr[i]]--;
+    }
+
+    for (int i = 0; i < n; i++) {
+        arr[i] = tmp[i];
+    }
+
+    delete[] tmp;
+    delete[] cnt;
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 //Radix Sort with comparison counter
-void RadixSortCount(int arr[], int n, long long& comparisons) {
+void RadixSortCount(int arr[], int n, long long& comparisons,double& time) {
+    auto startTime = high_resolution_clock::now();
     int* tmp = new int[n]; 
     int max = arr[0];       
     int exp = 1;            
@@ -241,44 +300,16 @@ void RadixSortCount(int arr[], int n, long long& comparisons) {
         exp *= 10;
     }
     delete[] tmp;
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
-//Counting Sort 
-void CountingSort(int arr[], int n) {
-    int* tmp = new int[n];
 
-   
-    int max = arr[0];
-    for (int i = 1; i < n; i++) {
-        if (arr[i] > max)
-            max = arr[i];
-    }
-    
-    int* cnt = new int[max + 1]();
-    
-    for (int i = 0;  i < n; i++) {
-        cnt[arr[i]]++;
-    }
-   
-    for (int i = 1; i <= max; i++) {
-        cnt[i] += cnt[i - 1];
-    }
-   
-    for (int i = n - 1;  i >= 0; i--) {
-        tmp[cnt[arr[i]] - 1] = arr[i];
-        cnt[arr[i]]--;
-    }
-    
-    for (int i = 0; i < n; i++) {
-        arr[i] = tmp[i];
-    }
-
-    delete[] tmp;
-    delete[] cnt;
-}
 
 //Radix Sort
-void RadixSort(int arr[], int n) {
+void RadixSort(int arr[], int n,double& time) {
+    auto startTime = high_resolution_clock::now();
     int* tmp = new int[n];
     int max = arr[0];
     int exp = 1;
@@ -306,12 +337,16 @@ void RadixSort(int arr[], int n) {
         exp *= 10;
     }
     delete[] tmp;
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 
 // Select Sort
-void selectionSort(int* arr, int n)
+void selectionSort(int* arr, int n,double& time)
 {
+    auto startTime = high_resolution_clock::now();
     for (int i = 0; i < n - 1; i++)
     {
         int min = i;
@@ -328,10 +363,14 @@ void selectionSort(int* arr, int n)
             arr[min] = temp;
         }
     }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 // Select Sort Counting
-void selectionSortCount(int* arr, int n,long long& comp)
+void selectionSortCount(int* arr, int n,long long& comp,double& time)
 {
+    auto startTime = high_resolution_clock::now();
     comp = 0;
     for (int i = 0; i < n - 1 && ++comp; i++)
     {
@@ -349,12 +388,15 @@ void selectionSortCount(int* arr, int n,long long& comp)
             arr[min] = temp;
         }
     }
-    
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 // Merge Sort
-void mergeSort(int* arr, int n)
+void mergeSort(int* arr, int n, double& time)
 {
+    auto startTime = high_resolution_clock::now();
     // Split the array into two halves
     int mid = n / 2;
     int* left = new int[mid];
@@ -386,39 +428,39 @@ void mergeSort(int* arr, int n)
     // Free the memory allocated to the two halves
     delete[] left;
     delete[] right;
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 
 
 // Merge Sort counting
-void mergeSortCount(int* arr, int n, long long& comp) {
-    comp = 0; 
-
-    // Base case: if the array has 0 or 1 elements, it is already sorted
+void mergeSortCount(int* arr, int n, long long& comp, double& time) {
+     
+    auto startTime = high_resolution_clock::now();
+    comp = 0;
     if (n <= 1) {
+        time = 0.0;
         return;
     }
-
-    // Split the array into two halves
     int mid = n / 2;
     int* left = new int[mid];
     int* right = new int[n - mid];
 
     for (int i = 0; i < mid; i++) {
         left[i] = arr[i];
-        comp++; // Increment the comparison count
+        comp++; 
     }
 
     for (int i = mid; i < n; i++) {
         right[i - mid] = arr[i];
-        comp++; // Increment the comparison count
+        comp++; 
     }
 
-    // Recursively sort the two halves
-    mergeSortCount(left, mid, comp);
-    mergeSortCount(right, n - mid, comp);
+    mergeSortCount(left, mid, comp,time);
+    mergeSortCount(right, n - mid, comp,time);
 
-    // Merge the two sorted halves
     int i = 0, j = 0, k = 0;
     while (i < mid && j < n - mid) {
         if (left[i] <= right[j]) {
@@ -427,31 +469,32 @@ void mergeSortCount(int* arr, int n, long long& comp) {
         else {
             arr[k++] = right[j++];
         }
-        comp++; // Increment the comparison count
+        comp++; 
     }
 
-    // Copy the remaining elements of the left half
     while (i < mid) {
         arr[k++] = left[i++];
-        comp++; // Increment the comparison count
+        comp++; 
     }
 
-    // Copy the remaining elements of the right half
     while (j < n - mid) {
         arr[k++] = right[j++];
-        comp++; // Increment the comparison count
+        comp++; 
     }
 
-    // Free the dynamically allocated memory
     delete[] left;
     delete[] right;
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 
 
 
 // Flash Sort
-void flashSort(int arr[], int n) {
+void flashSort(int arr[], int n, double& time) {
+    auto startTime = high_resolution_clock::now();
     int max = arr[0];
     for (int i = 1; i < n; i++) {
         if (arr[i] > max) {
@@ -482,12 +525,15 @@ void flashSort(int arr[], int n) {
         exp *= 10;
         delete[] output;
     }
-    
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 // Flash Sort counting
-void flashSortCount(int arr[], int n,long long& comp)
+void flashSortCount(int arr[], int n,long long& comp,double& time)
 {
+    auto startTime = high_resolution_clock::now();
     comp = 0;
     int max = arr[0];
     for (int i = 1; i < n && ++comp; i++)
@@ -515,12 +561,15 @@ void flashSortCount(int arr[], int n,long long& comp)
         delete[] output;
         exp *= 10;
     }
-    
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 // Insertion Sort
-void insertionSort(int* arr, int n)
+void insertionSort(int* arr, int n,double& time)
 {
+    auto startTime = high_resolution_clock::now();
     for (int i = 1; i < n; i++)
     {
         int temp = arr[i];
@@ -532,11 +581,15 @@ void insertionSort(int* arr, int n)
         }
         arr[j + 1] = temp;
     }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 // Insertion Sort counting
-void insertionSortCount(int* arr, int n,long long& comp)
+void insertionSortCount(int* arr, int n,long long& comp,double& time)
 {
+    auto startTime = high_resolution_clock::now();
     comp = 0;
     for (int i = 1; i < n && ++comp; i++)
     {
@@ -549,13 +602,15 @@ void insertionSortCount(int* arr, int n,long long& comp)
         }
         arr[j + 1] = temp;
     }
-    
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 // Shell Sort
-void shellSort(int* arr, int n)
+void shellSort(int* arr, int n,double& time)
 {
-
+    auto startTime = high_resolution_clock::now();
     int gap = n / 2;
     while (gap > 0)
     {
@@ -572,11 +627,15 @@ void shellSort(int* arr, int n)
         }
         gap /= 2;
     }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 // Shell Sort counting
-void shellSortCount(int* arr, int n,long long& comp)
+void shellSortCount(int* arr, int n,long long& comp,double& time)
 {
+    auto startTime = high_resolution_clock::now();
     comp = 0;
     int gap = n / 2;
     while (gap > 0 && ++comp)
@@ -594,7 +653,9 @@ void shellSortCount(int* arr, int n,long long& comp)
         }
         gap /= 2;
     }
-    
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 //Quick Sort
@@ -618,7 +679,8 @@ int partition(int* a, int n, int left, int right)
     return i;
 }
 
-void QuickSort(int* a, int n, int l, int r) {
+void QuickSort(int* a, int n, int l, int r, double& time) {
+    auto startTime = high_resolution_clock::now();
     // Create a stack for iterative implementation
     int* stack = new int[r - l + 1];
 
@@ -652,9 +714,12 @@ void QuickSort(int* a, int n, int l, int r) {
             stack[++top] = r;
         }
     }
-
+    
     // Delete the stack to free memory
     delete[] stack;
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 // Quick Sort
 int sortFirstMiddleLast(int arr[], int first, int last)
@@ -748,8 +813,9 @@ int partitionCount(int arr[], int first, int last, long long& comp)
 
 void quicksortCount(int arr[], int first, int last, long long& comp) {
     // Base case: if the subarray has less than 10 elements, use insertion sort
+    double time = 0;
     if (last - first + 1 < 10) {
-        insertionSort(arr + first, last - first + 1);
+        insertionSort(arr + first, last - first + 1,time);
         return;
     }
 
@@ -759,11 +825,15 @@ void quicksortCount(int arr[], int first, int last, long long& comp) {
     // Recursively sort the left and right subarrays
     quicksortCount(arr, first, pivotIndex - 1, comp);
     quicksortCount(arr, pivotIndex + 1, last, comp);
+
 }
 
-void quickSortCount(int arr[], int n,long long& comp)
+void quickSortCount(int arr[], int n,long long& comp,double& time)
 {
-    
+    auto startTime = high_resolution_clock::now();
     quicksortCount(arr, 0, n - 1,comp);
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
     
 }
