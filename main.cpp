@@ -154,131 +154,99 @@ void Condition_Comand4(string algorithm, string outputParams, int n, int* arr, d
     time = 0.0;
     comparisons = 0;
 
-    long long BubbleComparisons = 0;
-    long long ShakerComparisons = 0;
-    long long HeapComparisons = 0;
-    long long SelectionComparisons = 0;
-    long long InsertionComparisons = 0;
-    long long MergeComparisons = 0;
-    long long QuickComparisons = 0;
-    long long ShellComparisons = 0;
-    long long CountingComparisons = 0;
-    long long RadixComparisons = 0;
-    long long FlashComparisons = 0;
-
-    double BubbleTime = 0.0;
-    double ShakerTime = 0.0;
-    double HeapTime = 0.0;
-    double SelectionTime = 0.0;
-    double InsertionTime = 0.0;
-    double MergeTime = 0.0;
-    double QuickTime = 0.0;
-    double ShellTime = 0.0;
-    double CountingTime = 0.0;
-    double RadixTime = 0.0;
-    double FlashTime = 0.0;
-
     if (algorithm == "bubble-sort") {
         if (outputParams == "-both" || outputParams == "-time") {
-            basicBubbleSort(arr, n, BubbleTime);
+            basicBubbleSort(arr, n, time);
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            basicBubbleSortCount(arr, n, BubbleComparisons, BubbleTime);
+            basicBubbleSortCount(arr, n, comparisons, time);
         }
     }
     else if (algorithm == "shaker-sort") {
         if (outputParams == "-both" || outputParams == "-time") {
-            basicShakerSort(arr, n, ShakerTime);
+            basicShakerSort(arr, n, time);
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            basicShakerSortCount(arr, n, ShakerComparisons, ShakerTime);
+            basicShakerSortCount(arr, n, comparisons, time);
         }
     }
     else if (algorithm == "heap-sort") {
         if (outputParams == "-both" || outputParams == "-time") {
-            basicHeapSort(arr, n, HeapTime);
+            basicHeapSort(arr, n, time);
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            basicHeapSortCount(arr, n, HeapComparisons, HeapTime);
+            basicHeapSortCount(arr, n, comparisons, time);
         }
     }
     else if (algorithm == "selection-sort") {
         if (outputParams == "-both" || outputParams == "-time") {
-            selectionSort(arr, n, SelectionTime);
+            selectionSort(arr, n, time);
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            selectionSortCount(arr, n, SelectionComparisons, SelectionTime);
+            selectionSortCount(arr, n, comparisons, time);
         }
-
     }
     else if (algorithm == "insertion-sort") {
         if (outputParams == "-both" || outputParams == "-time") {
-            insertionSort(arr, n, InsertionTime);
+            insertionSort(arr, n, time);
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            insertionSortCount(arr, n, InsertionComparisons, InsertionTime);
+            insertionSortCount(arr, n, comparisons, time);
         }
-
     }
     else if (algorithm == "merge-sort") {
         if (outputParams == "-both" || outputParams == "-time") {
-            mergeSort(arr, n, MergeTime);
+            mergeSort(arr, n, time);
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            mergeSortCount(arr, n, MergeComparisons, MergeTime);
+            mergeSortCount(arr, n, comparisons, time);
         }
-
     }
     else if (algorithm == "quick-sort") {
         if (outputParams == "-both" || outputParams == "-time") {
-            QuickSort(arr, n, 0, n - 1, QuickTime);
+            QuickSort(arr, n, 0, n - 1, time);
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            quickSortCount(arr, n, QuickComparisons, QuickTime);
+            quickSortCount(arr, n, comparisons, time);
         }
-
     }
     else if (algorithm == "shell-sort") {
         if (outputParams == "-both" || outputParams == "-time") {
-            shellSort(arr, n, ShellTime);
+            shellSort(arr, n, time);
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            shellSortCount(arr, n, ShellComparisons, ShellTime);
+            shellSortCount(arr, n, comparisons, time);
         }
-
     }
     else if (algorithm == "counting-sort") {
         if (outputParams == "-both" || outputParams == "-time") {
-            CountingSort(arr, n, CountingTime);
+            CountingSort(arr, n, time);
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            CountingSortCount(arr, n, CountingComparisons, CountingTime);
+            CountingSortCount(arr, n, comparisons, time);
         }
-
     }
     else if (algorithm == "radix-sort") {
         if (outputParams == "-both" || outputParams == "-time") {
-            RadixSort(arr, n, RadixTime);
+            RadixSort(arr, n, time);
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            RadixSortCount(arr, n, RadixComparisons, RadixTime);
+            RadixSortCount(arr, n, comparisons, time);
         }
-
     }
     else if (algorithm == "flash-sort") {
         if (outputParams == "-both" || outputParams == "-time") {
-            flashSort(arr, n, FlashTime);
+            flashSort(arr, n, time);
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            flashSortCount(arr, n, FlashComparisons, FlashTime);
+            flashSortCount(arr, n, comparisons, time);
         }
-
     }
-
     else {
         cout << "Unknown algorithm: " << algorithm << endl;
     }
 }
+
 void ReadArrayFromFile(const string& filename, int*& arr, int& n) { 
     ifstream fin(filename);
     if (!fin) {
@@ -433,9 +401,10 @@ void Command4(string algorithm1, string algorithm2, string InputFile) {
 }
 int main(int argc, char* argv[]) {
     if (argc < 5 || argc > 6) {
-        cout << "Usage for Command 1: " << argv[0] << " -a [Algorithm] [InputFile] [Output parameter(s)]" << endl;
-        cout << "Usage for Command 2: " << argv[0] << " -a [Algorithm] [InputSize] [Order] [Output parameter(s)]" << endl;
-        cout << "Usage for Command 4: " << argv[0] << " -c [Algorithm1] [Algorithm2] [InputFile] [Output parameter(s)]" << endl;
+        cout << "Usage for Command 1: " << argv[0] << " -a [Algorithm] [Input File] [Output parameter(s)]" << endl;
+        cout << "Usage for Command 2: " << argv[0] << " -a [Algorithm] [Input Size] [Input Order] [Output parameter(s)]" << endl;
+        cout << "Usage for Command 3: " << argv[0] << " -a [Algorithm] [Input Size]   [Output parameter(s)]" << endl;
+        cout << "Usage for Command 4: " << argv[0] << " -c [Algorithm1] [Algorithm2] [Input File]" << endl;
         return 1;
     }
 
