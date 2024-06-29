@@ -45,11 +45,11 @@ void basicShakerSortCount(int* arr, int n, long long& comparisonCount, double& t
     int start = 0;
     int end = n - 1;
 
-    while (swapped) {
+    while (++comparisonCount && swapped) {
         swapped = false;
-        for (int i = start; i < end; ++i) {
-            comparisonCount++;
-            if (arr[i] > arr[i + 1]) {
+        for (int i = start; ++comparisonCount && i < end; ++i) {
+
+            if (++comparisonCount && arr[i] > arr[i + 1]) {
                 swap(arr[i], arr[i + 1]);
                 swapped = true;
             }
@@ -60,9 +60,9 @@ void basicShakerSortCount(int* arr, int n, long long& comparisonCount, double& t
         swapped = false;
         --end;
 
-        for (int i = end - 1; i >= start; --i) {
-            comparisonCount++;
-            if (arr[i] > arr[i + 1]) {
+        for (int i = end - 1; ++comparisonCount && i >= start; --i) {
+
+            if (++comparisonCount && arr[i] > arr[i + 1]) {
                 swap(arr[i], arr[i + 1]);
                 swapped = true;
             }
@@ -116,19 +116,19 @@ void basicHeapifyCount(int* arr, int n, int i, long long& comparisonCount) {
     int left = 2 * i + 1;
     int right = 2 * i + 2;
 
-    if (comparisonCount++ && left < n) {
-        
-        if (comparisonCount++ && arr[left] > arr[largest]) {
+    if (++comparisonCount && left < n) {
+
+        if (arr[left] > arr[largest]) {
             largest = left;
         }
     }
-    if (comparisonCount++ && right < n) {
-        
-        if (comparisonCount++ && arr[right] > arr[largest]) {
+    if (++comparisonCount && right < n) {
+
+        if (arr[right] > arr[largest]) {
             largest = right;
         }
     }
-    if (comparisonCount++ && largest != i) {
+    if (++comparisonCount && largest != i) {
         swap(arr[i], arr[largest]);
         basicHeapifyCount(arr, n, largest, comparisonCount);
     }
@@ -138,11 +138,11 @@ void basicHeapifyCount(int* arr, int n, int i, long long& comparisonCount) {
 // Basic Heap Sort with comparison counter
 void basicHeapSortCount(int* arr, int n, long long& comparisonCount, double& time) {
     auto startTime = high_resolution_clock::now();
-    for (int i = n / 2 - 1; i >= 0; i--) {
+    for (int i = n / 2 - 1; ++comparisonCount && i >= 0; i--) {
         basicHeapifyCount(arr, n, i, comparisonCount);
     }
 
-    for (int i = n - 1; i > 0; i--) {
+    for (int i = n - 1; ++comparisonCount && i > 0; i--) {
         swap(arr[0], arr[i]);
         basicHeapifyCount(arr, i, 0, comparisonCount);
     }
@@ -435,7 +435,7 @@ void mergeSort(int* arr, int n, double& time)
 void mergeSortCount(int* arr, int n, long long& comp, double& time) {
 
     auto startTime = high_resolution_clock::now();
-    comp = 0;
+
     if (n <= 1) {
         time = 0.0;
         return;
@@ -446,36 +446,35 @@ void mergeSortCount(int* arr, int n, long long& comp, double& time) {
 
     for (int i = 0; ++comp && i < mid; i++) {
         left[i] = arr[i];
-        
+        comp++;
     }
 
     for (int i = mid; ++comp && i < n; i++) {
         right[i - mid] = arr[i];
-       
+        comp++;
     }
 
     mergeSortCount(left, mid, comp, time);
     mergeSortCount(right, n - mid, comp, time);
 
     int i = 0, j = 0, k = 0;
-    while (++comp && i < mid && ++comp && j < n - mid) {
-        if (left[i] <= right[j]) {
+    while (++comp && i < mid && j < n - mid) {
+        if (++comp && left[i] <= right[j]) {
             arr[k++] = left[i++];
         }
         else {
+
             arr[k++] = right[j++];
         }
-        
+
     }
 
-    while (comp++ && i < mid) {
+    while (++comp && i < mid) {
         arr[k++] = left[i++];
-        
     }
 
-    while (comp++ && j < n - mid) {
+    while (++comp && j < n - mid) {
         arr[k++] = right[j++];
-        
     }
 
     delete[] left;
@@ -532,21 +531,21 @@ void flashSortCount(int arr[], int n, long long& comp, double& time)
     auto startTime = high_resolution_clock::now();
     comp = 0;
     int max = arr[0];
-    for (int i = 1; ++comp && i < n; i++)
-        if (++comp && arr[i] > max)
+    for (int i = 1; i < n && ++comp; i++)
+        if (arr[i] > max && ++comp)
             max = arr[i];
     int exp = 1;
-    while (++comp && max / exp > 0 )
+    while (max / exp > 0 && ++comp)
     {
         int* count = new int[10];
-        for (int i = 0; ++comp && i < 10; i++)
+        for (int i = 0; i < 10 && ++comp; i++)
             count[i] = 0;
-        for (int i = 0; ++comp && i < n ; i++)
+        for (int i = 0; i < n && ++comp; i++)
             count[(arr[i] / exp) % 10]++;
         for (int i = 1; i < 10 && ++comp; i++)
             count[i] += count[i - 1];
         int* output = new int[n];
-        for (int i = n - 1; ++comp && i >= 0; i--)
+        for (int i = n - 1; i >= 0 && ++comp; i--)
         {
             output[count[(arr[i] / exp) % 10] - 1] = arr[i];
             count[(arr[i] / exp) % 10]--;
@@ -591,7 +590,7 @@ void insertionSortCount(int* arr, int n, long long& comp, double& time)
     {
         int temp = arr[i];
         int j = i - 1;
-        while ((++comp && j >= 0) && (++comp && arr[j] > temp))
+        while ((++comp && j >= 0) && arr[j] > temp)
         {
             arr[j + 1] = arr[j];
             j--;
@@ -781,18 +780,18 @@ int partitionCount(int arr[], int first, int last, long long& comp)
     // Determine the regions S1 and S2
     int indexFromLeft = first + 1, indexFromRight = last - 2;
     int done = false;
-    while (++comp && !done)
+    while (!done && ++comp)
     {
         // Locate first entry on left that is >= pivot
-        while (++comp && arr[indexFromLeft] < pivot) {
+        while (arr[indexFromLeft] < pivot && ++comp) {
             indexFromLeft++;
         }
         // Locate first entry on right that is <= pivot
-        while (++comp && arr[indexFromRight] > pivot ) {
+        while (arr[indexFromRight] > pivot && ++comp) {
             indexFromRight--;
         }
         // Swap the two found entries
-        if (++comp && indexFromLeft <= indexFromRight )
+        if (indexFromLeft <= indexFromRight && ++comp)
         {
             swap(arr[indexFromLeft], arr[indexFromRight]);
             indexFromLeft++;
@@ -803,14 +802,14 @@ int partitionCount(int arr[], int first, int last, long long& comp)
     }
     // Place pivot in proper position between S1 and S2
     swap(arr[pivotIndex], arr[indexFromLeft]);
-    pivotIndex = indexFromLeft; // and mark its new location
+    pivotIndex = indexFromLeft; // and mark its new locationB
     return pivotIndex;
 }
 
 void quicksortCount(int arr[], int first, int last, long long& comp) {
     // Base case: if the subarray has less than 10 elements, use insertion sort
     double time = 0;
-    if (last - first + 1 < 10) {
+    if (last - first + 1 < 10 && ++comp) {
         insertionSort(arr + first, last - first + 1, time);
         return;
     }
