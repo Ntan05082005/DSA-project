@@ -452,12 +452,91 @@ void Command4(string algorithm1, string algorithm2, string InputFile) {
     delete[] arr;
     delete[] arr_copy;
 }
+
+void Command5(string algorithm1, string algorithm2, string s, string order) {
+    int n = stoi(s);
+    int* arr = new int[n];
+
+    double time1, time2;
+    long long comparisons1, comparisons2;
+
+    if (order == "-rand") {
+        GenerateData(arr, n, 0); // Random order
+        WriteArrayToFile("input.txt", arr, n);
+
+        int* arr_copy = new int[n];
+        copy(arr, arr + n, arr_copy);
+
+        Condition_Comand4(algorithm1, "-both", n, arr, time1, comparisons1);
+        Condition_Comand4(algorithm2, "-both", n, arr_copy, time2, comparisons2);
+
+        cout << "Running time: " << time1 << " | " << time2 << endl;
+        cout << "Comparisions: " << comparisons1 << " | " << comparisons2 << endl;
+        delete[] arr;
+        delete[] arr_copy;
+
+    }
+    else if (order == "-sorted") {
+        GenerateData(arr, n, 1); // Sorted order
+        WriteArrayToFile("input.txt", arr, n);
+
+        int* arr_copy = new int[n];
+        copy(arr, arr + n, arr_copy);
+
+        Condition_Comand4(algorithm1, "-both", n, arr, time1, comparisons1);
+        Condition_Comand4(algorithm2, "-both", n, arr_copy, time2, comparisons2);
+
+        cout << "Running time: " << time1 << " | " << time2 << endl;
+        cout << "Comparisions: " << comparisons1 << " | " << comparisons2 << endl;
+        delete[] arr;
+        delete[] arr_copy;
+    }
+    else if (order == "-rev") {
+        GenerateData(arr, n, 2);  // Reverse sorted order
+        WriteArrayToFile("input.txt", arr, n);
+
+        int* arr_copy = new int[n];
+        copy(arr, arr + n, arr_copy);
+
+        Condition_Comand4(algorithm1, "-both", n, arr, time1, comparisons1);
+        Condition_Comand4(algorithm2, "-both", n, arr_copy, time2, comparisons2);
+
+        cout << "Running time: " << time1 << " | " << time2 << endl;
+        cout << "Comparisions: " << comparisons1 << " | " << comparisons2 << endl;
+        delete[] arr;
+        delete[] arr_copy;
+    }
+    else if (order == "-nsorted") {
+        GenerateData(arr, n, 3);  // Nearly sorted order
+        WriteArrayToFile("input.txt", arr, n);
+
+        int* arr_copy = new int[n];
+        copy(arr, arr + n, arr_copy);
+
+        Condition_Comand4(algorithm1, "-both", n, arr, time1, comparisons1);
+        Condition_Comand4(algorithm2, "-both", n, arr_copy, time2, comparisons2);
+
+        cout << "Running time: " << time1 << " | " << time2 << endl;
+        cout << "Comparisions: " << comparisons1 << " | " << comparisons2 << endl;
+        delete[] arr;
+        delete[] arr_copy;
+    }
+    else {
+        cout << "Unknown data order: " << order << endl;
+        delete[] arr;
+        return;
+    }
+
+
+}
+
 int main(int argc, char* argv[]) {
     if (argc < 5 || argc > 6) {
-        cout << "Usage for Command 1: " << argv[0] << " -a [Algorithm] [Input File] [Output parameter(s)]" << endl;
-        cout << "Usage for Command 2: " << argv[0] << " -a [Algorithm] [Input Size] [Input Order] [Output parameter(s)]" << endl;
-        cout << "Usage for Command 3: " << argv[0] << " -a [Algorithm] [Input Size]   [Output parameter(s)]" << endl;
-        cout << "Usage for Command 4: " << argv[0] << " -c [Algorithm1] [Algorithm2] [Input File]" << endl;
+        cout << "Usage for Command 1: " << argv[0] << " -a [Algorithm] [Input file] [Output param]" << endl;
+        cout << "Usage for Command 2: " << argv[0] << " -a [Algorithm] [Input size] [Input order] [Output param]" << endl;
+        cout << "Usage for Command 3: " << argv[0] << " -a [Algorithm] [Input size]  [Output parameter(s)]" << endl;
+        cout << "Usage for Command 4: " << argv[0] << " -c [Algorithm1] [Algorithm2] [Input file]" << endl;
+        cout << "Usage for Command 5: " << argv[0] << " -c [Algorithm1] [Algorithm2] [Input size] [Output param]" << endl;
         return 1;
     }
 
@@ -513,12 +592,26 @@ int main(int argc, char* argv[]) {
             cout << "Algorithm: " << algorithm1 << " | " << algorithm2 << endl;
             cout << "Input file: " << InputFile << endl;
             Command4(algorithm1, algorithm2, InputFile);
-            
+
+        }
+        if (argc == 6) {
+            string algorithm1 = argv[2];
+            string algorithm2 = argv[3];
+            string inputSize = argv[4];
+            string inputOrder = argv[5];
+
+            cout << "COMPARE MODE" << endl;
+            cout << "Algorithm: " << algorithm1 << " | " << algorithm2 << endl;
+            cout << "Input size: " << inputSize << endl;
+            cout << "Input order: " << inputOrder << endl;
+            cout << "----------------------------------------" << endl;
+            Command5(algorithm1, algorithm2, inputSize, inputOrder);
         }
         else {
             cout << "Invalid number of arguments for compare mode." << endl;
             return 1;
         }
+
     }
     else {
         cout << "Invalid mode: " << mode << endl;
@@ -527,4 +620,5 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+
 
