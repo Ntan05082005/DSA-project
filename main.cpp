@@ -96,7 +96,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
             cout << "Running time (if required): " << QuickTime << " seconds\n";
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            basicHeapSortCount(arr, n, QuickComparisons, QuickTime);
+            quickSortCount(arr, n, QuickComparisons, QuickTime);
             cout << "Comparisons (if required): " << QuickComparisons << endl;
         }
 
@@ -234,7 +234,7 @@ void Condition_Comand4(string algorithm, string outputParams, int n, int* arr, d
             QuickSort(arr, n, 0, n - 1, QuickTime);
         }
         if (outputParams == "-both" || outputParams == "-comp") {
-            basicHeapSortCount(arr, n, QuickComparisons, QuickTime);
+            quickSortCount(arr, n, QuickComparisons, QuickTime);
         }
 
     }
@@ -335,16 +335,24 @@ void Comand2(string algorithm, string s, string order, string outputParams) {
 
     
     if (order == "-rand") {
-        GenerateData(arr, n, 0);  // Random order
+        GenerateData(arr, n, 0); // Random order
+        cout << "Input order: Randomized Data" << endl;
+        cout << "----------------------------------------" << endl;
     }
     else if (order == "-sorted") {
-        GenerateData(arr, n, 1);  // Sorted order
+        GenerateData(arr, n, 1); // Sorted order
+        cout << "Input order: Sorted Data" << endl;
+        cout << "----------------------------------------" << endl;
     }
     else if (order == "-rev") {
         GenerateData(arr, n, 2);  // Reverse sorted order
+        cout << "Input order: Reverse Sorted Data" << endl;
+        cout << "----------------------------------------" << endl;
     }
     else if (order == "-nsorted") {
         GenerateData(arr, n, 3);  // Nearly sorted order
+        cout << "Input order: Nearly Sorted Data" << endl;
+        cout << "----------------------------------------" << endl;
     }
     else {
         cout << "Unknown data order: " << order << endl;
@@ -362,6 +370,43 @@ void Comand2(string algorithm, string s, string order, string outputParams) {
 
     delete[] arr;
 }
+
+void Command3(string algorithm, string s, string outputParams) {
+    int n = stoi(s);
+    int* arr = new int[n];
+
+    GenerateData(arr, n, 0);  // Random order
+    WriteArrayToFile("input_1.txt", arr, n);
+    cout << "Input order: Randomized Data" << endl;
+    cout << "----------------------------------------" << endl;
+    Condition_Comand1(algorithm, outputParams, n, arr);
+    cout << endl;
+
+    GenerateData(arr, n, 3);  // Nearly sorted order
+    WriteArrayToFile("input_2.txt", arr, n);
+    cout << "Input order: Nearly Sorted Data" << endl;
+    cout << "----------------------------------------" << endl;
+    Condition_Comand1(algorithm, outputParams, n, arr);
+    cout << endl;
+
+    GenerateData(arr, n, 1);  // Sorted order
+    WriteArrayToFile("input_3.txt", arr, n);
+    cout << "Input order: Sorted Data" << endl;
+    cout << "----------------------------------------" << endl;
+    Condition_Comand1(algorithm, outputParams, n, arr);
+    cout << endl;
+
+    GenerateData(arr, n, 2);  // Reverse sorted order
+    WriteArrayToFile("input_4.txt", arr, n);
+    cout << "Input order: Reverse Sorted Data" << endl;
+    cout << "----------------------------------------" << endl;
+    Condition_Comand1(algorithm, outputParams, n, arr);
+
+    delete[] arr;
+
+
+}
+
 
 void Command4(string algorithm1, string algorithm2, string InputFile) {
     int n;
@@ -408,6 +453,14 @@ int main(int argc, char* argv[]) {
                 cout << "Input file: " << input << endl;
                 Comand1(algorithm, input, outputParams1);
             }
+            else if (isdigit(input[0])) {
+                // Command 3
+                cout << "ALGORITHM MODE" << endl;
+                cout << "Algorithm: " << algorithm << endl;
+                cout << "Input size: " << input << endl;
+                cout << endl;
+                Command3(algorithm, input, outputParams1);
+            }
             else {
                 cout << "Invalid input: " << input << endl;
                 return 1;
@@ -421,8 +474,6 @@ int main(int argc, char* argv[]) {
             cout << "ALGORITHM MODE" << endl;
             cout << "Algorithm: " << algorithm << endl;
             cout << "Input size: " << input << endl;
-            cout << "Data order: " << order << endl;
-            cout << "----------------------------------------" << endl;
             Comand2(algorithm, input, order, outputParams2);
         }
         else {
@@ -440,6 +491,7 @@ int main(int argc, char* argv[]) {
             cout << "Algorithm: " << algorithm1 << " | " << algorithm2 << endl;
             cout << "Input file: " << InputFile << endl;
             Command4(algorithm1, algorithm2, InputFile);
+            
         }
         else {
             cout << "Invalid number of arguments for compare mode." << endl;
