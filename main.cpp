@@ -31,7 +31,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
             basicBubbleSort(arr, n, BubbleTime);
             cout << "Running time (if required): " << BubbleTime << " seconds\n";
         }
-        if (outputParams == "-comparison") {
+        if (outputParams == "-comp") {
             basicBubbleSortCount(arr, n, BubbleComparisons, BubbleTime);
             cout << "Comparisons (if required): " << BubbleComparisons << endl;
         }
@@ -46,7 +46,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
             basicShakerSort(arr, n, ShakerTime);
             cout << "Running time (if required):  " << ShakerTime << " seconds\n";
         }
-        if (outputParams == "-comparison") {
+        if (outputParams == "-comp") {
             basicShakerSortCount(arr, n, ShakerComparisons, ShakerTime);
             cout << "Comparisons (if required): " << ShakerComparisons << endl;
         }
@@ -61,7 +61,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
             basicHeapSort(arr, n, HeapTime);
             cout << "Running time (if required): " << HeapTime << " seconds\n";
         }
-        if (outputParams == "-comparison") {
+        if (outputParams == "-comp") {
             basicHeapSortCount(arr, n, HeapComparisons, HeapTime);
             cout << "Comparisons (if required): " << HeapComparisons << endl;
         }
@@ -76,7 +76,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
             selectionSort(arr, n, SelectionTime);
             cout << "Running time (if required): " << SelectionTime << " seconds\n";
         }
-        if (outputParams == "-comparison") {
+        if (outputParams == "-comp") {
             selectionSortCount(arr, n, SelectionComparisons, SelectionTime);
             cout << "Comparisons (if required): " << SelectionComparisons << endl;
         }
@@ -92,7 +92,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
             insertionSort(arr, n, InsertionTime);
             cout << "Running time (if required): " << InsertionTime << " seconds\n";
         }
-        if (outputParams == "-comparison") {
+        if (outputParams == "-comp") {
             insertionSortCount(arr, n, InsertionComparisons, InsertionTime);
             cout << "Comparisons (if required): " << InsertionComparisons << endl;
         }
@@ -107,7 +107,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
             mergeSort(arr, n, MergeTime);
             cout << "Running time (if required): " << MergeTime << " seconds\n";
         }
-        if (outputParams == "-comparison") {
+        if (outputParams == "-comp") {
             mergeSortCount(arr, n, MergeComparisons, MergeTime);
             cout << "Comparisons (if required): " << MergeComparisons << endl;
         }
@@ -123,7 +123,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
             QuickSort(arr, n, 0, n - 1, QuickTime);
             cout << "Running time (if required): " << QuickTime << " seconds\n";
         }
-        if (outputParams == "-comparison") {
+        if (outputParams == "-comp") {
             quickSortCount(arr, n, QuickComparisons, QuickTime);
             cout << "Comparisons (if required): " << QuickComparisons << endl;
         }
@@ -139,7 +139,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
             shellSort(arr, n, ShellTime);
             cout << "Running time (if required): " << ShellTime << " seconds\n";
         }
-        if (outputParams == "-comparison") {
+        if (outputParams == "-comp") {
             shellSortCount(arr, n, ShellComparisons, ShellTime);
             cout << "Comparisons (if required): " << ShellComparisons << endl;
         }
@@ -155,7 +155,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
             CountingSort(arr, n, CountingTime);
             cout << "Running time (if required): " << CountingTime << " seconds\n";
         }
-        if (outputParams == "-comparison") {
+        if (outputParams == "-comp") {
             CountingSortCount(arr, n, CountingComparisons, CountingTime);
             cout << "Comparisons (if required): " << CountingComparisons << endl;
         }
@@ -171,7 +171,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
             RadixSort(arr, n, RadixTime);
             cout << "Running time (if required): " << RadixTime << " seconds\n";
         }
-        if (outputParams == "-comparison") {
+        if (outputParams == "-comp") {
             RadixSortCount(arr, n, RadixComparisons, RadixTime);
             cout << "Comparisons (if required): " << RadixComparisons << endl;
         }
@@ -187,7 +187,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
             flashSort(arr, n, FlashTime);
             cout << "Running time (if required): " << FlashTime << " seconds\n";
         }
-        if (outputParams == "-comparison") {
+        if (outputParams == "-comp") {
             flashSortCount(arr, n, FlashComparisons, FlashTime);
             cout << "Comparisons (if required): " << FlashTime << endl;
         }
