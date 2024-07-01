@@ -594,7 +594,7 @@ int main(int argc, char* argv[]) {
             Command4(algorithm1, algorithm2, InputFile);
 
         }
-        if (argc == 6) {
+        else if (argc == 6) {
             string algorithm1 = argv[2];
             string algorithm2 = argv[3];
             string inputSize = argv[4];
