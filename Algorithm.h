@@ -8,15 +8,26 @@ using namespace std;
 // Timer functions
 
 
-// Bubble Sort Variations
+// Bubble Sort and variations
 void basicBubbleSortCount(int *arr, int n, long long &comparisonCount, double& time);
 void basicBubbleSort(int *arr, int n, double& time);
 
-// Heap Sort Variations
+void optimizedBubbleSortCount(int *arr, int n, long long &comparisonCount, double& time);
+void optimizedBubbleSort(int *arr, int n, double& time);
+
+void recursiveBubbleSortCount(int arr[], int n, long long &comparisonCount);
+void recursiveBubbleSort(int arr[], int n);
+
+// Heap Sort and variations
 void basicHeapifyCount(int *arr, int n, int i, long long &comparisonCount);
 void basicHeapify(int *arr, int n, int i);
 void basicHeapSortCount(int *arr, int n, long long &comparisonCount, double& time);
 void basicHeapSort(int *arr, int n, double& time);
+
+void floydHeapifyCount(int arr[], int n, int i, long long &comparisonCount);
+void floydHeapSortCount(int *arr, int n, double& time);
+void floydHeapify(int arr[], int n, int i);
+void floydHeapSort(int *arr, int n, double& time);
 
 // Shaker Sort
 void basicShakerSortCount(int *arr, int n, long long &comparisonCount, double& time);
@@ -30,7 +41,7 @@ void CountingSort(int arr[], int n, double& time);
 void RadixSort(int arr[], int n, double& time);
 void RadixSortCount(int arr[], int n, long long& comparisons, double& time);
 
-// Select Sort
+// Selection Sort
 void selectionSort(int* arr, int n, double& time);
 void selectionSortCount(int* arr, int n, long long& comp, double& time);
 
