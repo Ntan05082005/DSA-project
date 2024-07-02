@@ -1298,7 +1298,7 @@ void binaryInsertionSortCount(int arr[], int n, long long& comp, double& time)
     auto startTime = high_resolution_clock::now();
     comp = 0;
 
-    for (int i = 1; i < n; ++i)
+    for (int i = 1;++comp && i < n; ++i)
     {
         int item = arr[i];
         int j = i - 1;
