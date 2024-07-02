@@ -3,8 +3,6 @@
 #define HEADER_FILE
 
 #include <iostream>
-#include <conio.h>  // Thu vien de goi ham getch()
-
 #include <cstdlib>
 using namespace std;
 // Timer functions
