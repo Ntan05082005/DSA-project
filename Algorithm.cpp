@@ -101,16 +101,17 @@ void TimeRecursiveBubbleSort(int arr[], int n, double& time) {
 void optimizedBubbleSortCount(int* arr, int n, long long& comparisonCount, double& time) {
     auto start = high_resolution_clock::now();
     bool swapped;
-    for (int i = 0; comparisonCount++ && i < n - 1; i++) {
+    for (int i = 0; i < n - 1; i++) {
         swapped = false;
-        for (int j = n - 1; ++comparisonCount && j > i; j--) {
-
-            if (comparisonCount++ && arr[j] < arr[j - 1]) {
+        for (int j = n - 1; j > i; j--) {
+            comparisonCount++;  // Increment comparison count for each comparison
+            if (arr[j] < arr[j - 1]) {
                 swap(arr[j], arr[j - 1]);
                 swapped = true;
             }
         }
-        if (comparisonCount++ && !swapped)
+        comparisonCount++;  // Increment for the 'swapped' check
+        if (!swapped)
             break;
     }
     auto end = chrono::high_resolution_clock::now(); // End the timer
@@ -143,15 +144,14 @@ void optimizedBubbleSort(int* arr, int n, double& time) {
 void brickSortCount(int arr[], int n, long long& comparisonsCount,double& time) {
     auto start = high_resolution_clock::now();
     bool isSorted = false;
-    comparisonsCount = 0;
-
-    while (++comparisonsCount && !isSorted) {
+   
+    while (!isSorted) {
         isSorted = true;
 
         // Perform Brick sort on odd indexed elements
-        for (int i = 1; ++comparisonsCount && i <= n - 2; i += 2) {
-            
-            if (++comparisonsCount && arr[i] > arr[i + 1]) {
+        for (int i = 1; i <= n - 2; i += 2) {
+            comparisonsCount++;
+            if (arr[i] > arr[i + 1]) {
                 // Swap elements
                 swap(arr[i], arr[i + 1]);
                 isSorted = false;
@@ -159,15 +159,16 @@ void brickSortCount(int arr[], int n, long long& comparisonsCount,double& time) 
         }
 
         // Perform Brick sort on even indexed elements
-        for (int i = 0; ++comparisonsCount && i <= n - 2; i += 2) {
-            
-            if (++comparisonsCount && arr[i] > arr[i + 1]) {
+        for (int i = 0; i <= n - 2; i += 2) {
+            comparisonsCount++;
+            if (arr[i] > arr[i + 1]) {
                 // Swap elements
                 swap(arr[i], arr[i + 1]);
                 isSorted = false;
             }
         }
     }
+
     auto end = chrono::high_resolution_clock::now(); // End the timer
     chrono::duration<double> duration = end - start;
     time = duration.count();
@@ -1289,7 +1290,7 @@ int binarySearchcount(int arr[], int item, int low, int high, long long& comp)
         else
             high = mid - 1;
     }
-    return low;
+    return comp;
 }
 
 // Binary Insertion Sort with comparison counter and timing
