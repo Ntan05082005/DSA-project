@@ -1551,7 +1551,151 @@ void quickSortCount(int arr[], int n, long long& comp, double& time)
 
 }
 
+//Variation of Quick Sort
+//3-way Quick Sort
+void basicThreeWaypartition(int a[], int l, int r, int& i, int& j) {
+    i = l - 1, j = r;
+    int p = l - 1, q = r;
+    int v = a[r];
 
+    while (true) {
+        // Từ trái, tìm phần tử đầu tiên lớn hơn hoặc bằng v
+        while (a[++i] < v) {
+            ;
+        }
 
+        // Từ phải, tìm phần tử đầu tiên nhỏ hơn hoặc bằng v
+        while (v < a[--j]) {
+            if (j == l) break;
+        }
+
+        // Nếu i và j giao nhau, dừng
+        if (i >= j) break;
+
+        // Hoán đổi để phần tử nhỏ hơn sang trái, lớn hơn sang phải
+        swap(a[i], a[j]);
+
+        // Di chuyển tất cả các phần tử trùng với pivot bên trái về đầu mảng
+        if (a[i] == v) {
+            p++;
+            swap(a[p], a[i]);
+        }
+
+        // Di chuyển tất cả các phần tử trùng với pivot bên phải về cuối mảng
+        if (a[j] == v) {
+            q--;
+            swap(a[j], a[q]);
+        }
+    }
+
+    // Di chuyển phần tử pivot về đúng vị trí
+    swap(a[i], a[r]);
+
+    // Di chuyển tất cả các phần tử trùng với pivot bên trái về cạnh a[i]
+    j = i - 1;
+    for (int k = l; k < p; k++, j--) {
+        swap(a[k], a[j]);
+    }
+
+    // Di chuyển tất cả các phần tử trùng với pivot bên phải về cạnh a[i]
+    i = i + 1;
+    for (int k = r - 1; k > q; k--, i++) {
+        swap(a[i], a[k]);
+    }
+}
+
+// Quick Sort 3 chiều
+void basicThreeWayquicksort(int a[], int l, int r, double& time) {
+    auto startTime = high_resolution_clock::now();
+    if (r <= l) return;
+
+    int i, j;
+
+    // Note that i and j are passed as reference
+    basicThreeWaypartition(a, l, r, i, j);
+
+    // Recur
+    basicThreeWayquicksort(a, l, j, time);
+    basicThreeWayquicksort(a, i, r, time);
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
+}
+
+void ThreeWaypartitionCount(int a[], int l, int r, int& i, int& j, long long& comparisons) {
+    i = l - 1, j = r;
+    int p = l - 1, q = r;
+    int v = a[r];
+
+    while (true) {
+        // Từ trái, tìm phần tử đầu tiên lớn hơn hoặc bằng v
+        while (++i < r && ++comparisons && a[i] < v) {}
+
+        // Từ phải, tìm phần tử đầu tiên nhỏ hơn hoặc bằng v
+        while (--j > l && ++comparisons && v < a[j]) {
+            if (j == l) break;
+        }
+
+        // Nếu i và j giao nhau, dừng
+        ++comparisons;
+        if (i >= j) break;
+
+        // Hoán đổi để phần tử nhỏ hơn sang trái, lớn hơn sang phải
+        swap(a[i], a[j]);
+
+        // Di chuyển tất cả các phần tử trùng với pivot bên trái về đầu mảng
+        if (++comparisons && a[i] == v) {
+            p++;
+            swap(a[p], a[i]);
+        }
+
+        // Di chuyển tất cả các phần tử trùng với pivot bên phải về cuối mảng
+        if (++comparisons && a[j] == v) {
+            q--;
+            swap(a[j], a[q]);
+        }
+    }
+
+    // Di chuyển phần tử pivot về đúng vị trí
+    swap(a[i], a[r]);
+
+    // Di chuyển tất cả các phần tử trùng với pivot bên trái về cạnh a[i]
+    j = i - 1;
+    for (int k = l; ++comparisons && k < p; k++, j--) {
+        swap(a[k], a[j]);
+    }
+
+    // Di chuyển tất cả các phần tử trùng với pivot bên phải về cạnh a[i]
+    i = i + 1;
+    for (int k = r - 1; ++comparisons && k > q; k--, i++) {
+        swap(a[i], a[k]);
+    }
+}
+
+// Quick Sort 3 chiều có đếm số lần so sánh
+void basicThreeWayquicksortCount(int a[], int l, int r, long long& comparisons) {
+    if (++comparisons && r <= l) return;
+
+    int i, j;
+
+    // Note that i and j are passed as reference
+    ThreeWaypartitionCount(a, l, r, i, j, comparisons);
+
+    // Recur
+    basicThreeWayquicksortCount(a, l, j, comparisons);
+    basicThreeWayquicksortCount(a, i, r, comparisons);
+}
+
+// Hàm Quick Sort 3 chiều có tính thời gian và số lần so sánh
+void ThreeWayquicksortCount(int a[], int n, long long& comparisons, double& time) {
+    comparisons = 0;
+    auto start = high_resolution_clock::now();
+
+    basicThreeWayquicksortCount(a, 0, n - 1, comparisons);
+
+    auto end = high_resolution_clock::now();
+    duration<double> duration = end - start;
+    time = duration.count();
+}
 
 

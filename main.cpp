@@ -332,6 +332,23 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
 
     }
 
+    else if (algorithm == "quick-sort") {
+        if (outputParams == "-time") {
+            basicThreeWayquicksort(arr, n, 0,QuickTime);
+            cout << "Running time (if required): " << QuickTime << " seconds\n";
+        }
+        if (outputParams == "-comp") {
+            ThreeWayquicksortCount(arr, n, QuickComparisons, QuickTime);
+            cout << "Comparisons (if required): " << QuickComparisons << endl;
+        }
+        if (outputParams == "-both") {
+            ThreeWayquicksortCount(arr, n, QuickComparisons, QuickTime);
+            cout << "Comparisons (if required): " << QuickComparisons << endl;
+            cout << "Running time (if required): " << QuickTime << " seconds\n";
+        }
+
+    }
+
     else {
             cout << "Unknown algorithm: " << algorithm << endl;
     }
@@ -540,6 +557,19 @@ void Condition_Comand4(string algorithm, string outputParams, int n, int* arr, d
             LSDradixSortCount(arr, n, comparisons, time);
         }
     }
+
+    else if (algorithm == "quick-sort") {
+        if (outputParams == "-time") {
+            basicThreeWayquicksort(arr, n, 0, time);
+        }
+        if (outputParams == "-comp") {
+            ThreeWayquicksortCount(arr, n, comparisons,time);
+        }
+        if (outputParams == "-both") {
+            ThreeWayquicksortCount(arr, n, comparisons, time);
+        }
+
+     }
 
     else {
         cout << "Unknown algorithm: " << algorithm << endl;

@@ -41,6 +41,8 @@ void basicShakerSort(int *arr, int n, double& time);
 //Counting Sort
 void CountingSortCount(int arr[], int n, long long& comparisons, double& time);
 void CountingSort(int arr[], int n, double& time);
+void NegativeNumCountingSort(int arr[], int size, double& time);
+void NegativeNumCountingSortCount(int arr[], int size, long long& comp, double& time);
 
 //Radix Sort
 void RadixSort(int arr[], int n, double& time);
@@ -93,8 +95,12 @@ int partition(int arr[], int first, int last);
 int partitionCount(int arr[], int first, int last, long long& comp);
 void quicksortCount(int arr[], int first, int last, long long& comp);
 void quickSortCount(int arr[], int n, long long& comp, double& time);
-void NegativeNumCountingSort(int arr[], int size, double& time);
-void NegativeNumCountingSortCount(int arr[], int size, long long& comp, double& time);
+void basicThreeWayquicksort(int a[], int l, int r, double& time);
+void basicThreeWaypartition(int a[], int l, int r, int& i, int& j);
+void ThreeWayquicksortCount(int a[], int n, long long& comparisons, double& time);
+void basicThreeWayquicksortCount(int a[], int l, int r, long long& comparisons);
+void ThreeWaypartitionCount(int a[], int l, int r, int& i, int& j, long long& comparisons);
+
 
 #endif
 
