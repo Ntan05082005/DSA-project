@@ -1,4 +1,4 @@
-#include "Algorithm.h"
+﻿#include "Algorithm.h"
 #include "Data.h"
 
 
@@ -35,63 +35,173 @@ void basicBubbleSort(int* arr, int n, double& time) {
     chrono::duration<double> duration = end - start;
     time = duration.count();
 }
-// Optimized Bubble Sort with comparison counter
-void optimizedBubbleSortCount(int arr[], int n, long long &comparisonCount) {
-    bool swapped;
-    for (int i = 0; i < n - 1; i++) {
-        swapped = false;
-        for (int j = n - 1; j > i; j--) {
-            comparisonCount++;
-            if (arr[j] < arr[j - 1]) {
-                swap(arr[j], arr[j - 1]);
-                swapped = true;
-            }
-        }
-        if (!swapped) 
-            break;
-    }
-}
-
-// Optimized Bubble Sort without comparison counter
-void optimizedBubbleSort(int arr[], int n) {
-    bool swapped;
-    for (int i = 0; i < n - 1; i++) {
-        swapped = false;
-        for (int j = n - 1; j > i; j--) {
-            if (arr[j] < arr[j - 1]) {
-                swap(arr[j], arr[j - 1]);
-                swapped = true;
-            }
-        }
-        if (!swapped) 
-            break;
-    }
-}
 
 // Recursive Bubble Sort with comparison counter
-void recursiveBubbleSort(int arr[], int n, long long &comparisonCount) {
-    if (n == 1) 
+void recursiveBubbleSortCount(int arr[], int n, long long& comparisonCount) {
+
+    if (n == 1)
         return; // Base case
-    for (int i = 0; i < n - 1; i++) {
-        comparisonCount++;
-        if (arr[i] > arr[i + 1]) {
+    for (int i = 0; ++comparisonCount && i < n - 1; i++) {
+
+        if (++comparisonCount && arr[i] > arr[i + 1]) {
             swap(arr[i], arr[i + 1]);
         }
     }
-    recursiveBubbleSort(arr, n - 1, comparisonCount);
-}
 
+    recursiveBubbleSortCount(arr, n - 1, comparisonCount);
+}
+void TimeRecursiveBubbleSortCount(int arr[], int n, long long& comparisonCount, double& time) {
+    auto start = std::chrono::steady_clock::now();
+
+    // Call your sorting function
+    comparisonCount = 0;
+    time = 0.0;
+    recursiveBubbleSortCount(arr, n, comparisonCount);
+
+    // Record the end time
+    auto end = std::chrono::steady_clock::now();
+
+    // Calculate the duration
+    std::chrono::duration<double> duration = end - start;
+
+    time = duration.count();
+}
 // Recursive Bubble Sort without comparison counter
 void recursiveBubbleSort(int arr[], int n) {
-    if (n == 1) 
+    if (n == 1)
         return;
-    for (int i = 0; i < n-1; i++) {
+    for (int i = 0; i < n - 1; i++) {
         if (arr[i] > arr[i + 1]) {
             swap(arr[i], arr[i + 1]);
         }
     }
     recursiveBubbleSort(arr, n - 1);
 }
+
+void TimeRecursiveBubbleSort(int arr[], int n, double& time) {
+    auto start = std::chrono::steady_clock::now();
+
+    // Call your sorting function
+    long long comparisonCount = 0;
+
+    recursiveBubbleSort(arr, n);
+
+    // Record the end time
+    auto end = std::chrono::steady_clock::now();
+
+    // Calculate the duration
+    std::chrono::duration<double> duration = end - start;
+
+    time = duration.count();
+}
+
+
+//Variations of the sorting algorithms
+// Optimized Bubble Sort with comparison counter
+void optimizedBubbleSortCount(int* arr, int n, long long& comparisonCount, double& time) {
+    auto start = high_resolution_clock::now();
+    bool swapped;
+    for (int i = 0; comparisonCount++ && i < n - 1; i++) {
+        swapped = false;
+        for (int j = n - 1; ++comparisonCount && j > i; j--) {
+
+            if (comparisonCount++ && arr[j] < arr[j - 1]) {
+                swap(arr[j], arr[j - 1]);
+                swapped = true;
+            }
+        }
+        if (comparisonCount++ && !swapped)
+            break;
+    }
+    auto end = chrono::high_resolution_clock::now(); // End the timer
+    chrono::duration<double> duration = end - start;
+    time = duration.count();
+}
+
+// Optimized Bubble Sort without comparison counter
+void optimizedBubbleSort(int* arr, int n, double& time) {
+    auto start = high_resolution_clock::now();
+    bool swapped;
+    for (int i = 0; i < n - 1; i++) {
+        swapped = false;
+        for (int j = n - 1; j > i; j--) {
+            if (arr[j] < arr[j - 1]) {
+                swap(arr[j], arr[j - 1]);
+                swapped = true;
+            }
+        }
+        if (!swapped)
+            break;
+    }
+    auto end = chrono::high_resolution_clock::now(); // End the timer
+    chrono::duration<double> duration = end - start;
+    time = duration.count();
+}
+
+//Variations of the sorting algorithms
+// Brick Sort with comparison counter
+void brickSortCount(int arr[], int n, long long& comparisonsCount,double& time) {
+    auto start = high_resolution_clock::now();
+    bool isSorted = false;
+    comparisonsCount = 0;
+
+    while (++comparisonsCount && !isSorted) {
+        isSorted = true;
+
+        // Perform Brick sort on odd indexed elements
+        for (int i = 1; ++comparisonsCount && i <= n - 2; i += 2) {
+            
+            if (++comparisonsCount && arr[i] > arr[i + 1]) {
+                // Swap elements
+                swap(arr[i], arr[i + 1]);
+                isSorted = false;
+            }
+        }
+
+        // Perform Brick sort on even indexed elements
+        for (int i = 0; ++comparisonsCount && i <= n - 2; i += 2) {
+            
+            if (++comparisonsCount && arr[i] > arr[i + 1]) {
+                // Swap elements
+                swap(arr[i], arr[i + 1]);
+                isSorted = false;
+            }
+        }
+    }
+    auto end = chrono::high_resolution_clock::now(); // End the timer
+    chrono::duration<double> duration = end - start;
+    time = duration.count();
+}
+
+// Brick Sort without comparison counter
+void brickSort(int arr[], int n,double& time) {
+    auto start = high_resolution_clock::now();
+    bool isSorted = false;
+
+    while (!isSorted) {
+        isSorted = true;
+
+        // Perform Brick sort on odd indexed elements
+        for (int i = 1; i <= n - 2; i += 2) {
+            if (arr[i] > arr[i + 1]) {
+                swap(arr[i], arr[i + 1]);
+                isSorted = false;
+            }
+        }
+
+        // Perform Brick sort on even indexed elements
+        for (int i = 0; i <= n - 2; i += 2) {
+            if (arr[i] > arr[i + 1]) {
+                swap(arr[i], arr[i + 1]);
+                isSorted = false;
+            }
+        }
+    }
+    auto end = chrono::high_resolution_clock::now(); // End the timer
+    chrono::duration<double> duration = end - start;
+    time = duration.count();
+}
+
 
 // Shaker Sort 
 // Basic Shaker Sort with comparison counter
@@ -247,43 +357,49 @@ void basicHeapSort(int* arr, int n, double& time) {
     time = duration.count();
 }
 
+
 // Floyd's Heap Sort Variations
 // Floyd's Heapify function with comparison counter
-void floydHeapifyCount(int arr[], int n, int i, long long &comparisonCount) {
+void floydHeapifyCount(int arr[], int n, int i, long long& comparisonCount) {
+
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
 
-    if (left < n) {
-        if (comparisonCount) 
-            comparisonCount++;
-        if (arr[left] > arr[largest]) {
+    if (++comparisonCount && left < n) {
+
+        if (++comparisonCount && arr[left] > arr[largest]) {
             largest = left;
         }
     }
-    if (right < n) {
-        if (comparisonCount) 
-            comparisonCount++;
-        if (arr[right] > arr[largest]) {
+    if (++comparisonCount && right < n) {
+
+
+        if (++comparisonCount && arr[right] > arr[largest]) {
             largest = right;
         }
     }
-    if (largest != i) {
+    if (++comparisonCount && largest != i) {
         swap(arr[i], arr[largest]);
         floydHeapifyCount(arr, n, largest, comparisonCount);
     }
+
 }
 
 // Floyd's Heap Sort with comparison counter
-void floydHeapSortCount(int arr[], int n, long long &comparisonCount) {
-    for (int i = n / 2 - 1; i >= 0; i--) {
+void floydHeapSortCount(int arr[], int n, long long& comparisonCount, double& time) {
+    auto startTime = high_resolution_clock::now();
+    for (int i = n / 2 - 1; ++comparisonCount && i >= 0; i--) {
         floydHeapifyCount(arr, n, i, comparisonCount);
     }
 
-    for (int i = n - 1; i > 0; i--) {
+    for (int i = n - 1; ++comparisonCount && i > 0; i--) {
         swap(arr[0], arr[i]);
         floydHeapifyCount(arr, i, 0, comparisonCount);
     }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
 
 // Floyd's Heapify function without comparison counter
@@ -309,7 +425,8 @@ void floydHeapify(int arr[], int n, int i) {
 }
 
 // Floyd's Heap Sort without comparison counter
-void floydHeapSort(int arr[], int n) {
+void floydHeapSort(int arr[], int n, double& time) {
+    auto startTime = high_resolution_clock::now();
     for (int i = n / 2 - 1; i >= 0; i--) {
         floydHeapify(arr, n, i);
     }
@@ -318,7 +435,13 @@ void floydHeapSort(int arr[], int n) {
         swap(arr[0], arr[i]);
         floydHeapify(arr, i, 0);
     }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
 }
+
+
+
 
 //Counting Sort with comparison counter
 void CountingSortCount(int arr[], int n, long long& comparisons, double& time) {
@@ -396,6 +519,84 @@ void CountingSort(int arr[], int n, double& time) {
     time = duration.count();
 }
 
+//Variation of Counting Sort
+//Counting sort for negeative numbers
+
+void NegativeNumCountingSortCount(int arr[], int size, long long& comp, double& time) {
+    auto startTime = high_resolution_clock::now();
+    if (size == 0) {
+        return;
+    }
+
+
+    int minVal = *min_element(arr, arr + size);
+    int maxVal = *max_element(arr, arr + size);
+
+
+    int range = maxVal - minVal + 1;
+
+
+    int* count = new int[range]();
+
+
+    for (int i = 0; ++comp && i < size; ++i) {
+        count[arr[i] - minVal]++;
+    }
+
+
+    int index = 0;
+    for (int i = 0; ++comp && i < range; ++i) {
+        while (++comp && count[i]-- > 0) {
+            arr[index++] = i + minVal;
+        }
+    }
+
+
+    delete[] count;
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
+}
+
+void NegativeNumCountingSort(int arr[], int size, double& time) {
+    auto startTime = high_resolution_clock::now();
+    if (size == 0) {
+        return;
+    }
+
+
+    int minVal = *min_element(arr, arr + size);
+    int maxVal = *max_element(arr, arr + size);
+
+
+    int range = maxVal - minVal + 1;
+
+
+    int* count = new int[range]();
+
+
+    for (int i = 0; i < size; ++i) {
+        count[arr[i] - minVal]++;
+    }
+
+
+    int index = 0;
+    for (int i = 0; i < range; ++i) {
+        while (count[i]-- > 0) {
+            arr[index++] = i + minVal;
+        }
+    }
+
+
+    delete[] count;
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
+}
+
+
+
+
 //Radix Sort with comparison counter
 void RadixSortCount(int arr[], int n, long long& comparisons, double& time) {
     auto startTime = high_resolution_clock::now();
@@ -470,8 +671,108 @@ void RadixSort(int arr[], int n, double& time) {
     time = duration.count();
 }
 
+//Variation of Radix Sort
+// LSD Radix Sort with counting comparisons
 
-// Select Sort
+void LSDradixSortCount(int arr[], int n, long long& comp, double& time) {
+    auto startTime = high_resolution_clock::now();
+    const int threshold = 10; // Threshold for switching to insertion sort
+
+    // Find the maximum element to determine the number of digits
+    int maxElement = arr[0];
+    for (int i = 1; ++comp && i < n; ++i) {
+        if (++comp && arr[i] > maxElement) {
+            maxElement = arr[i];
+        }
+    }
+
+
+    for (int exp = 1; ++comp && maxElement / exp > 0; exp *= 10) {
+        if (++comp && n <= threshold) {
+            insertionSortCount(arr, n, comp, time);
+            return;
+        }
+
+        int* output = new int[n];
+        int count[10] = { 0 };
+
+        // Count occurrences of each digit
+        for (int i = 0; ++comp && i < n; ++i) {
+            count[(arr[i] / exp) % 10]++;
+        }
+
+        // Calculate cumulative count
+        for (int i = 1; ++comp && i < 10; ++i) {
+            count[i] += count[i - 1];
+        }
+
+        // Build the output array
+        for (int i = n - 1; ++comp && i >= 0; --i) {
+            output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+            count[(arr[i] / exp) % 10]--;
+        }
+
+        // Copy the output back to the original array
+        for (int i = 0; ++comp && i < n; ++i) {
+            arr[i] = output[i];
+        }
+    }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
+}
+// LSD Radix Sort
+void LSDradixSort(int arr[], int n,double& time) {
+    auto startTime = high_resolution_clock::now();
+    const int threshold = 10; // Threshold for switching to insertion sort
+
+    // Find the maximum element to determine the number of digits
+    int maxElement = arr[0];
+    for (int i = 1; i < n; ++i) {
+        if (arr[i] > maxElement) {
+            maxElement = arr[i];
+        }
+    }
+
+   
+    for (int exp = 1; maxElement / exp > 0; exp *= 10) {
+        if (n <= threshold) {
+            insertionSort(arr, n,time);
+            return;
+        }
+
+        int* output = new int[n];
+        int count[10] = { 0 };
+
+        // Count occurrences of each digit
+        for (int i = 0; i < n; ++i) {
+            count[(arr[i] / exp) % 10]++;
+        }
+
+        // Calculate cumulative count
+        for (int i = 1; i < 10; ++i) {
+            count[i] += count[i - 1];
+        }
+
+        // Build the output array
+        for (int i = n - 1; i >= 0; --i) {
+            output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+            count[(arr[i] / exp) % 10]--;
+        }
+
+        // Copy the output back to the original array
+        for (int i = 0; i < n; ++i) {
+            arr[i] = output[i];
+        }
+    }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
+}
+
+
+
+// Selection Sort
 void selectionSort(int* arr, int n, double& time)
 {
     auto startTime = high_resolution_clock::now();
@@ -514,6 +815,69 @@ void selectionSortCount(int* arr, int n, long long& comp, double& time)
             HoanVi(arr[min], arr[i]);
         }
     }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
+}
+// Variation of selection sort
+// Recursive Selection Sort
+// Hàm để tìm vị trí phần tử nhỏ nhất trong mảng con
+int findMinIndex(int arr[], int start, int end) {
+    int minIndex = start;
+    for (int i = start + 1; i <= end; i++) {
+        if (arr[i] < arr[minIndex]) {
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+int findMinIndexCount(int arr[], int start, int end, long long& comparison) {
+    int minIndex = start;
+    for (int i = start + 1; ++comparison && i <= end; i++) {
+      
+        if (arr[i] < arr[minIndex]) {
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+
+// Hàm đệ quy để sắp xếp mảng
+void recursiveSelectionSort(int arr[], int start, int end) {
+    if (start >= end) {
+        return;
+    }
+
+    int minIndex = findMinIndex(arr, start, end);
+    HoanVi(arr[start], arr[minIndex]);
+
+    recursiveSelectionSort(arr, start + 1, end);
+}
+
+void recursiveSelectionSortCount(int arr[], int start, int end, long long& comparison) {
+    if (start >= end) {
+        return;
+    }
+
+    int minIndex = findMinIndexCount(arr, start, end, comparison);
+    swap(arr[start], arr[minIndex]);
+
+    recursiveSelectionSortCount(arr, start + 1, end, comparison);
+}
+
+void TimeRecursiveSelectionSort(int arr[], int n, double& time) {
+    auto startTime = high_resolution_clock::now();
+    recursiveSelectionSort(arr, 0, n - 1);
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
+}
+
+void TimeRecursiveSelectionSortCount(int arr[], int n,long long &comp, double& time) {
+    auto startTime = high_resolution_clock::now();
+    recursiveSelectionSortCount(arr, 0, n - 1, comp);
     auto endTime = high_resolution_clock::now();
     duration<double> duration = endTime - startTime;
     time = duration.count();
@@ -614,6 +978,141 @@ void mergeSortCount(int* arr, int n, long long& comp, double& time) {
     time = duration.count();
 }
 
+// In-place MergeSort
+void merge(int arr[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    // Tạo các mảng tạm để lưu trữ các phần tử
+    int* L = new int[n1];
+    int* R = new int[n2];
+    // Sao chép dữ liệu vào các mảng tạm
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+    // Merge các mảng tạm vào mảng gốc
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        }
+        else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    // Sao chép các phần tử còn lại của mảng L (nếu có)
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    // Sao chép các phần tử còn lại của mảng R (nếu có)
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+// Hàm đệ quy để sắp xếp mảng
+void inplaceMergeSort(int arr[], int left, int right) {
+    auto startTime = high_resolution_clock::now();
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+
+        // Sắp xếp hai nửa mảng
+        inplaceMergeSort(arr, left, mid);
+        inplaceMergeSort(arr, mid + 1, right);
+
+        // Merge hai nửa đã sắp xếp
+        merge(arr, left, mid, right);
+    }
+
+}
+void TimeInPlaceMergeSort(int arr[], int n, double& time) {
+    auto startTime = high_resolution_clock::now();
+
+    inplaceMergeSort(arr, 0, n - 1);
+
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
+}
+
+// Hàm để merge hai mảng con đã sắp xếp
+void merge(int arr[], int left, int mid, int right, long long& comparison) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    // Tạo các mảng tạm để lưu trữ các phần tử
+    int* L = new int[n1];
+    int* R = new int[n2];
+
+    // Sao chép dữ liệu vào các mảng tạm
+    for (int i = 0; ++comparison && i < n1; i++)
+        L[i] = arr[left + i];
+    for (int j = 0; ++comparison && j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+    // Merge các mảng tạm vào mảng gốc
+    int i = 0, j = 0, k = left;
+    while (++comparison && i < n1 && ++comparison && j < n2) {
+
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        }
+        else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+
+    while (++comparison && i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    // Sao chép các phần tử còn lại của mảng R (nếu có)
+    while (++comparison && j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+// Hàm đệ quy để sắp xếp mảng
+void inplaceMergeSortCount(int arr[], int left, int right, long long& comparison) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+
+        // Sắp xếp hai nửa mảng
+        inplaceMergeSortCount(arr, left, mid, comparison);
+        inplaceMergeSortCount(arr, mid + 1, right, comparison);
+
+        // Merge hai nửa đã sắp xếp
+        merge(arr, left, mid, right, comparison);
+    }
+}
+void TimeinplaceMergeSortCount(int arr[], int n, long long& comparison, double& time) {
+    auto startTime = high_resolution_clock::now();
+
+    inplaceMergeSortCount(arr, 0, n - 1, comparison);
+
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
+}
 
 
 
@@ -659,7 +1158,7 @@ void flashSort(int arr[], int n, double& time) {
 void flashSortCount(int arr[], int n, long long& comp, double& time)
 {
     auto startTime = high_resolution_clock::now();
-    comp = 0;
+   
     int max = arr[0];
     for (int i = 1; i < n && ++comp; i++)
         if (arr[i] > max && ++comp)
@@ -715,7 +1214,7 @@ void insertionSort(int* arr, int n, double& time)
 void insertionSortCount(int* arr, int n, long long& comp, double& time)
 {
     auto startTime = high_resolution_clock::now();
-    comp = 0;
+   
     for (int i = 1; ++comp && i < n; i++)
     {
         int temp = arr[i];
@@ -727,6 +1226,95 @@ void insertionSortCount(int* arr, int n, long long& comp, double& time)
         }
         arr[j + 1] = temp;
     }
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
+}
+
+//Variation of Insertion Sort
+// Binary search helper function (without counting)
+int binarySearch(int a[], int item, int low, int high)
+{
+    if (high <= low)
+        return (item > a[low]) ? (low + 1) : low;
+
+    int mid = (low + high) / 2;
+
+    if (item == a[mid])
+        return mid + 1;
+
+    if (item > a[mid])
+        return binarySearch(a, item, mid + 1, high);
+    return binarySearch(a, item, low, mid - 1);
+}
+
+// Binary Insertion Sort function with timing
+void BinaryinsertionSort(int a[], int n, double& time)
+{
+    auto startTime = high_resolution_clock::now();
+
+    int i, loc, j, k, selected;
+    for (i = 1; i < n; ++i)
+    {
+        j = i - 1;
+        selected = a[i];
+
+        // find location where selected should be inserted
+        loc = binarySearch(a, selected, 0, j);
+
+        // Move all elements after location to create space
+        while (j >= loc)
+        {
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = selected;
+    }
+
+    auto endTime = high_resolution_clock::now();
+    duration<double> duration = endTime - startTime;
+    time = duration.count();
+}
+int binarySearchcount(int arr[], int item, int low, int high, long long& comp)
+{
+    while (++comp && low <= high)
+    {
+        int mid = low + (high - low) / 2;
+
+
+        if (++comp && arr[mid] == item)
+            return mid + 1;
+        else if (++comp && arr[mid] < item)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+    return low;
+}
+
+// Binary Insertion Sort with comparison counter and timing
+void binaryInsertionSortCount(int arr[], int n, long long& comp, double& time)
+{
+    auto startTime = high_resolution_clock::now();
+    comp = 0;
+
+    for (int i = 1; i < n; ++i)
+    {
+        int item = arr[i];
+        int j = i - 1;
+
+        // Find the location where the item should be inserted
+        int loc = binarySearchcount(arr, item, 0, j, comp);
+
+        // Move all elements after location to create space
+        while (++comp && j >= loc)
+        {
+            arr[j + 1] = arr[j];
+            --j;
+        }
+        arr[j + 1] = item;
+    }
+
     auto endTime = high_resolution_clock::now();
     duration<double> duration = endTime - startTime;
     time = duration.count();
@@ -962,3 +1550,8 @@ void quickSortCount(int arr[], int n, long long& comp, double& time)
     time = duration.count();
 
 }
+
+
+
+
+

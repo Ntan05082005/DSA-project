@@ -130,7 +130,6 @@
     <ClCompile Include="Algorithm.cpp" />
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Algorithm.h" />

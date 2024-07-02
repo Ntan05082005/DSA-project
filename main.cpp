@@ -198,10 +198,145 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
         }
 
     }
+    
+    else if (algorithm == "recursive-bubble-sort") {
+        if (outputParams == "-time") {
+            TimeRecursiveBubbleSort(arr, n, BubbleTime);
+            cout << "Running time (if required): " << BubbleTime << " seconds\n";
+        }
+        if (outputParams == "-comp") {
+            TimeRecursiveBubbleSortCount(arr, n, BubbleComparisons, BubbleTime);
+            cout << "Comparisons (if required): " << BubbleTime << endl;
+        }
+        if (outputParams == "-both") {
+            TimeRecursiveBubbleSortCount(arr, n, BubbleComparisons, BubbleTime);
+            cout << "Comparisons (if required): " << BubbleComparisons << endl;
+            cout << "Running time (if required): " << BubbleTime << " seconds\n";
+        }
+
+    }
+
+    else if (algorithm == "negative-counting-sort") {
+        if (outputParams == "-time") {
+            NegativeNumCountingSort(arr, n, CountingTime);
+        }
+        if (outputParams == "-comp") {
+            NegativeNumCountingSortCount(arr, n, CountingComparisons, CountingTime);
+        }
+        if (outputParams == "-both") {
+            NegativeNumCountingSortCount(arr, n, CountingComparisons, CountingTime);
+            cout << "Comparisons (if required): " << CountingComparisons << endl;
+            cout << "Running time (if required): " << CountingTime << " seconds\n";
+        }
+    }
+
+    else if (algorithm == "optimized-bubble-sort") {
+        if (outputParams == "-time") {
+           optimizedBubbleSort(arr, n, BubbleTime);
+        }
+        if ( outputParams == "-comp") {
+            optimizedBubbleSortCount(arr, n, BubbleComparisons, BubbleTime);
+        }
+        if (outputParams == "-both") {
+            optimizedBubbleSortCount(arr, n, BubbleComparisons, BubbleTime);
+            cout << "Comparisons (if required): " << BubbleComparisons << endl;
+            cout << "Running time (if required): " << BubbleTime << " seconds\n";
+        }
+    }
+
+    else if (algorithm == "inplace-meerge-sort") {
+        if (outputParams == "-time") {
+            TimeInPlaceMergeSort(arr, n, MergeTime);
+        }
+        if (outputParams == "-comp") {
+            NegativeNumCountingSortCount(arr, n, MergeComparisons, MergeTime);
+        }
+        if (outputParams == "-both") {
+            NegativeNumCountingSortCount(arr, n, MergeComparisons, MergeTime);
+            cout << "Comparisons (if required): " << MergeComparisons << endl;
+            cout << "Running time (if required): " << MergeTime << " seconds\n";
+        }
+    }
+
+    else if (algorithm == "floyd-heap-sort") {
+        if (outputParams == "-time") {
+            floydHeapSort(arr, n, HeapTime);
+        }
+        if (outputParams == "-comp") {
+            floydHeapSortCount(arr, n, HeapComparisons, HeapTime);
+        }
+        if (outputParams == "-both") {
+            floydHeapSortCount(arr, n, HeapComparisons, HeapTime);
+            cout << "Comparisons (if required): " << HeapComparisons << endl;
+            cout << "Running time (if required): " << HeapTime << " seconds\n";
+        }
+    }
+
+    else if (algorithm == "brick-sort") {
+        if (outputParams == "-time") {
+            brickSort(arr, n, BubbleTime);
+        }
+        if (outputParams == "-comp") {
+            brickSortCount(arr, n, BubbleComparisons, BubbleTime);
+        }
+        if (outputParams == "-both") {
+            brickSortCount(arr, n, BubbleComparisons, BubbleTime);
+            cout << "Comparisons (if required): " << BubbleComparisons << endl;
+            cout << "Running time (if required): " << BubbleTime << " seconds\n";
+        }
+    }
+
+    
+    else if (algorithm == "recursive-selection-sort") {
+        if (outputParams == "-time") {
+            TimeRecursiveSelectionSort(arr, n, SelectionTime);
+        }
+        if (outputParams == "-comp") {
+            TimeRecursiveSelectionSortCount(arr, n, SelectionComparisons, SelectionTime);
+        }
+        if (outputParams == "-both") {
+            TimeRecursiveSelectionSortCount(arr, n, SelectionComparisons, SelectionTime);
+            cout << "Comparisons (if required): " << SelectionComparisons << endl;
+            cout << "Running time (if required): " << SelectionTime << " seconds\n";
+        }
+    }
+
+    else if (algorithm == "binary-insertion-sort") {
+        if (outputParams == "-time") {
+            BinaryinsertionSort(arr, n, InsertionTime);
+        }
+        if (outputParams == "-comp") {
+            binaryInsertionSortCount(arr, n, InsertionComparisons, InsertionTime);
+        }
+        if (outputParams == "-both") {
+            binaryInsertionSortCount(arr, n, InsertionComparisons, InsertionTime);
+            cout << "Comparisons (if required): " << SelectionComparisons << endl;
+            cout << "Running time (if required): " << SelectionTime << " seconds\n";
+        }
+    }
+
+    else if (algorithm == "LSD-radix-sort") {
+        if (outputParams == "-time") {
+            LSDradixSort(arr, n, RadixTime);
+            cout << "Running time (if required): " << RadixTime << " seconds\n";
+        }
+        if (outputParams == "-comp") {
+            LSDradixSortCount(arr, n, RadixComparisons, RadixTime);
+            cout << "Comparisons (if required): " << RadixComparisons << endl;
+        }
+        if (outputParams == "-both") {
+            LSDradixSortCount(arr, n, RadixComparisons, RadixTime);
+            cout << "Comparisons (if required): " << RadixComparisons << endl;
+            cout << "Running time (if required): " << RadixTime << " seconds\n";
+        }
+
+    }
 
     else {
-        cout << "Unknown algorithm: " << algorithm << endl;
+            cout << "Unknown algorithm: " << algorithm << endl;
     }
+
+   
 }
 void Condition_Comand4(string algorithm, string outputParams, int n, int* arr, double& time, long long& comparisons) {
     time = 0.0;
@@ -295,6 +430,117 @@ void Condition_Comand4(string algorithm, string outputParams, int n, int* arr, d
             flashSortCount(arr, n, comparisons, time);
         }
     }
+    else if (algorithm == "recursive-bubble-sort") {
+        if (outputParams == "-time") {
+            TimeRecursiveBubbleSort(arr, n, time);
+        }
+        if (outputParams == "-comp") {
+            TimeRecursiveBubbleSortCount(arr, n,comparisons, time);
+        }
+        if (outputParams == "-both") {
+            TimeRecursiveBubbleSortCount(arr, n, comparisons, time);
+        }
+
+    }
+
+    else if (algorithm == "negative-counting-sort") {
+        if (outputParams == "-time") {
+            NegativeNumCountingSort(arr, n, time);
+        }
+        if (outputParams == "-comp") {
+            NegativeNumCountingSortCount(arr, n, comparisons, time);
+        }
+        if (outputParams == "-both") {
+            NegativeNumCountingSortCount(arr, n, comparisons, time);
+            
+        }
+    }
+
+    else if (algorithm == "optimized-bubble-sort") {
+        if (outputParams == "-time") {
+            optimizedBubbleSort(arr, n, time);
+        }
+        if (outputParams == "-comp") {
+            optimizedBubbleSortCount(arr, n, comparisons,time);
+        }
+        if (outputParams == "-both") {
+            optimizedBubbleSortCount(arr, n,comparisons, time);
+            
+        }
+    }
+
+    else if (algorithm == "inplace-meerge-sort") {
+        if (outputParams == "-time") {
+            TimeInPlaceMergeSort(arr, n, time);
+        }
+        if (outputParams == "-comp") {
+            TimeinplaceMergeSortCount(arr, n, comparisons, time);
+        }
+        if (outputParams == "-both") {
+            TimeinplaceMergeSortCount(arr, n, comparisons, time);
+            cout << "Comparisons (if required): " << comparisons << endl;
+            cout << "Running time (if required): " << time << " seconds\n";
+        }
+    }
+
+    else if (algorithm == "floyd-heap-sort") {
+        if (outputParams == "-time") {
+            floydHeapSort(arr, n, time);
+        }
+        if (outputParams == "-comp") {
+            floydHeapSortCount(arr, n, comparisons, time);
+        }
+        if (outputParams == "-both") {
+            floydHeapSortCount(arr, n, comparisons, time);
+        }
+    }
+
+    else if (algorithm == "brick-sort") {
+        if (outputParams == "-time") {
+                brickSort(arr, n, time);
+        }
+        if (outputParams == "-comp") {
+                brickSortCount(arr, n, comparisons, time);
+        }
+        if (outputParams == "-both") {
+            brickSortCount(arr, n, comparisons, time);
+        }
+    }
+
+    else if (algorithm == "recursive-selection-sort") {
+        if (outputParams == "-time") {
+            TimeRecursiveSelectionSort(arr, n, time);
+        }
+        if (outputParams == "-comp") {
+            TimeRecursiveSelectionSortCount(arr, n, comparisons, time);
+        }
+        if (outputParams == "-both") {
+            TimeRecursiveSelectionSortCount(arr, n, comparisons, time);
+            
+        }
+    }
+
+    else if (algorithm == "binary-insertion-sort") {
+        if (outputParams == "-time") {
+            BinaryinsertionSort(arr, n, time);
+        }
+        if (outputParams == "-comp") {
+            binaryInsertionSortCount(arr, n, comparisons,time);
+        }
+        if (outputParams == "-both") {
+            binaryInsertionSortCount(arr, n, comparisons, time);
+        }
+    }
+
+    else if (algorithm == "radix-sort") {
+        if (outputParams == "-both" || outputParams == "-time") {
+            LSDradixSort(arr, n, time);
+        }
+        if (outputParams == "-both" || outputParams == "-comp") {
+            LSDradixSortCount(arr, n, comparisons, time);
+        }
+    }
+
     else {
         cout << "Unknown algorithm: " << algorithm << endl;
     }
@@ -620,5 +866,4 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-
 
