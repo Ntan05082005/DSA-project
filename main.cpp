@@ -332,7 +332,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
 
     }
 
-    else if (algorithm == "quick-sort") {
+    else if (algorithm == "three-way-quick-sort") {
         if (outputParams == "-time") {
             basicThreeWayquicksort(arr, n, 0,QuickTime);
             cout << "Running time (if required): " << QuickTime << " seconds\n";
@@ -558,7 +558,7 @@ void Condition_Comand4(string algorithm, string outputParams, int n, int* arr, d
         }
     }
 
-    else if (algorithm == "quick-sort") {
+    else if (algorithm == "three-way-quick-sort") {
         if (outputParams == "-time") {
             basicThreeWayquicksort(arr, n, 0, time);
         }
