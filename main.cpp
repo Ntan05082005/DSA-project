@@ -244,7 +244,7 @@ void Condition_Comand1(string algorithm, string outputParams, int n, int* arr) {
         }
     }
 
-    else if (algorithm == "inplace-meerge-sort") {
+    else if (algorithm == "inplace-merge-sort") {
         if (outputParams == "-time") {
             TimeInPlaceMergeSort(arr, n, MergeTime);
         }
